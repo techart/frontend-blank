@@ -3,5 +3,7 @@
 /node_modules/
 /test/comparison/
 /tmp
+/assets/*
+!/assets/.gitkeep
 *.log
 *~

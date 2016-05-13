@@ -13,6 +13,12 @@ var ComponentResolverPlugin = require('component-resolver-webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var SvgStore = require('webpack-svgstore-plugin');
 var SpritesmithPlugin = require('webpack-spritesmith');
+var AssetsPlugin = require('assets-webpack-plugin');
+
+var addHash = function(template, hash, devHash) {
+    devHash = devHash || hash;
+    return  (production ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) : `${template}?h=[${devHash}]`)
+};
 
 var plugins = [
 
@@ -66,7 +72,7 @@ var plugins = [
     }),
 
     new ExtractTextPlugin(
-        'css/[name].css', {
+        addHash('css/[name].css', 'contenthash'), {
             allChunks: false
         }
     ),
@@ -84,7 +90,13 @@ var plugins = [
             ['js', 'jsx', 'less']
             // array of extensions e.g `['js']` (default: `['jsx', 'js']`)
         )
-    ])
+    ]),
+
+    new AssetsPlugin({
+        filename: path.join('assets', env + '.json'),
+        path: __dirname,
+        prettyPrint: true
+    })
 
 ];
 
@@ -156,8 +168,8 @@ module.exports = {
     entry: userSettings.entry,
     output: {
         path: __dirname + '/' + userSettings.docroot + (production ? '/builds/prod' : '/builds/dev'),
-        filename: production ? 'js/[name].js' : 'js/[name].js',
-        chunkFilename: 'js/[name].js',
+        filename: addHash('js/[name].js', 'chunkhash', 'hash'),
+        chunkFilename: addHash('js/[name].js', 'chunkhash', 'hash'),
         publicPath: production ? '/builds/prod/' : '/builds/dev/'
     },
 
@@ -212,18 +224,18 @@ module.exports = {
             {
                 test: /\.(png|gif|jpe?g|svg)$/i,
                 loaders: [
-                    'url?limit=10000&name=[path][name].[ext]',
+                    'url?limit=10000&name=' + addHash('[path][name].[ext]', 'hash:6'),
                     'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
                     //'image?{bypassOnDebug: true, progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
                 ]
             },
             {
                 test: /\.woff2?(\?\S*)?$/i,
-                loader: 'url?limit=10000,name=[path][name].[ext]',
+                loader: 'url?limit=10000,name=' + addHash('[path][name].[ext]', 'hash:6'),
             },
             {
                 test: /\.ttf|eot(\?\S*)?$/,
-                loader: 'file,name=[path][name].[ext]'
+                loader: 'file?name=' + addHash('[path][name].[ext]', 'hash:6')
             }
         ]
     },
