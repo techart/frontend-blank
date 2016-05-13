@@ -1,6 +1,9 @@
 var fs = require( 'fs' );
 var workDir = fs.workingDirectory;
 var global_modules = '/usr/local/lib/node_modules';
+if (!fs.exists(global_modules)) {
+    global_modules = '/usr/lib/node_modules';
+}
 
 var phantomcss = require('phantomcss');
 var child_process = require('child_process');
