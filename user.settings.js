@@ -9,12 +9,13 @@ var getusername = function() {
 }
 
 module.exports = {
-    site: "web.techart.ru",
+    site: "milanodoors2.com",
     port: 8888,
-    docroot: '../web',
+    docroot: '../www',
     hotPort: 8889,
     entry: {
         index: ['./src/index.js'],
+        img: ['./src/img.js']
         // main: ['./src/page/main/main.js']
 
     },
