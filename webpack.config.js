@@ -20,6 +20,14 @@ var addHash = function(template, hash, devHash) {
     return  (production ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) : `${template}?h=[${devHash}]`)
 };
 
+var styles = 'css?sourceMap!postcss?sourceMap';
+var sassStyle = styles + '!sass?sourceMap';
+var lessStyle = styles + '!less?sourceMap';
+var imageLoader = 'image?bypassOnDebug&optimizationLevel=7&interlaced=false';
+//'image?{bypassOnDebug: true, progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+var fileLimit = 10000;
+var imgCommonFolder = 'img/common';
+
 var plugins = [
 
     new SvgStore(
@@ -99,10 +107,6 @@ var plugins = [
     })
 
 ];
-
-var styles = 'css?sourceMap!postcss?sourceMap';
-var sassStyle = styles + '!sass?sourceMap';
-var lessStyle = styles + '!less?sourceMap';
 
 if (production) {
     plugins = plugins.concat([
@@ -223,19 +227,27 @@ module.exports = {
             },
             {
                 test: /\.(png|gif|jpe?g|svg)$/i,
+                include: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
-                    'url?limit=10000&name=' + addHash('[path][name].[ext]', 'hash:6'),
-                    'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                    //'image?{bypassOnDebug: true, progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+                    'file?name=[path][name].[ext]',
+                    imageLoader
+                ]
+            },
+            {
+                test: /\.(png|gif|jpe?g|svg)$/i,
+                exclude: path.resolve(__dirname, imgCommonFolder),
+                loaders: [
+                    'url?limit='+fileLimit+'&name=[path][name].[ext]',
+                    imageLoader
                 ]
             },
             {
                 test: /\.woff2?(\?\S*)?$/i,
-                loader: 'url?limit=10000,name=' + addHash('[path][name].[ext]', 'hash:6'),
+                loader: 'url?limit='+fileLimit+',name=[path][name].[ext]',
             },
             {
                 test: /\.ttf|eot(\?\S*)?$/,
-                loader: 'file?name=' + addHash('[path][name].[ext]', 'hash:6')
+                loader: 'file?name=[path][name].[ext]'
             }
         ]
     },
