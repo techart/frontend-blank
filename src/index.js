@@ -2,7 +2,6 @@ import $ from 'jquery';
 import svg4everybody from 'svg4everybody';
 
 import 'block/common';
-import 'style';
 import 'layout/work';
 
 svg4everybody();

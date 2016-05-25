@@ -1,5 +1,6 @@
+@import "~style";
 @import "~normalize-scss/sass/normalize";
+@include normalize();
 @import "content";
 @import "layout";
 
-@include normalize();
