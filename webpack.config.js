@@ -17,9 +17,12 @@ var AssetsPlugin = require('assets-webpack-plugin');
 
 var addHash = function(template, hash, devHash) {
     devHash = devHash || hash;
-    return  (production ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) : `${template}?h=[${devHash}]`)
+    return  (production && userSettings.hash.prod ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) :
+        ( userSettings.hash.dev ? `${template}?h=[${devHash}]` : template))
 };
 
+
+var mainStyleType = 'scss';
 var styles = 'css?sourceMap!postcss?sourceMap';
 var sassStyle = styles + '!sass?sourceMap';
 var lessStyle = styles + '!less?sourceMap';
@@ -53,7 +56,7 @@ var plugins = [
         },
         target: {
             image: path.resolve(__dirname, 'img/sprite/sprite.png'),
-            css: path.resolve(__dirname, 'src/style/sprite.less')
+            css: path.resolve(__dirname, 'src/style/' + (mainStyleType == 'scss' ? '_' : '') + 'sprite.' + mainStyleType)
         },
         apiOptions: {
             cssImageRef: "~img/sprite/sprite.png"
@@ -95,7 +98,7 @@ var plugins = [
 
     new webpack.ResolverPlugin([
         new ComponentResolverPlugin(
-            ['js', 'jsx', 'less']
+            ['js', 'jsx', 'less', 'sass', 'scss']
             // array of extensions e.g `['js']` (default: `['jsx', 'js']`)
         )
     ]),
@@ -179,7 +182,7 @@ module.exports = {
 
     resolve: {
         root: path.resolve('./src'),
-        extensions: ['', '.js', '.less'],
+        extensions: ['', '.js', '.less', '.sass', '.scss'],
         alias: {
             img: 'img',
             font: 'font'
@@ -212,7 +215,7 @@ module.exports = {
                 loader: env != 'hot' ? ExtractTextPlugin.extract("style", "css") : 'style!' + styles
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|sass)$/,
                 // loader: 'style!css?sourceMap!sass?sourceMap'
                 loader: env != 'hot' ? ExtractTextPlugin.extract('style', sassStyle) : 'style!' + sassStyle
             },

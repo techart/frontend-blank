@@ -17,8 +17,9 @@
   "author": "web@techart.ru",
   "license": "ISC",
   "dependencies": {
+    "bourbon": "^4.2.7",
     "jquery": "^2.2.1",
-    "normalize.css": "^4.0.0",
+    "normalize-scss": "^5.0.2",
     "svg4everybody": "^2.0.3"
   },
   "devDependencies": {

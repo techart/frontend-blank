@@ -19,6 +19,11 @@ module.exports = {
         // main: ['./src/page/main/main.js']
 
     },
+    hash: {
+        'dev': false,
+        'prod': true
+    },
+    
     name: getusername(),
 
     devHost: function() {
