@@ -17,7 +17,7 @@ module.exports = {
 		return this.getBuildPath(env).replace(path.resolve(this.docRoot), '');
 	},
 	getBuildPath: function getBuildPath(env = 'prod') {
-		return path.resolve(this.buildPath, env != 'hot' ? env : 'dev');
+		return path.resolve(this.buildPath, env != 'hot' ? env : 'dev') + '/';
 	},
 	getUserName: function getUserName() {
 		try {
