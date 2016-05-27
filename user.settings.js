@@ -7,6 +7,7 @@ module.exports = {
 	docRoot: '../www',
 	buildPath: '../www/builds',
 	hotPort: 8889,
+	mainStyleType: 'scss',
 	entry: {
 		index: ['./src/index.js'],
 		img: ['./src/img.js']

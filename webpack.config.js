@@ -14,6 +14,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var SvgStore = require('webpack-svgstore-plugin');
 var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
+var styleLintPlugin = require('stylelint-webpack-plugin');
 
 var addHash = function(template, hash, devHash) {
 	devHash = devHash || hash;
@@ -22,7 +23,7 @@ var addHash = function(template, hash, devHash) {
 };
 
 
-var mainStyleType = 'scss';
+var mainStyleType = userSettings.mainStyleType;
 var styles = 'css?sourceMap!postcss?sourceMap';
 var sassStyle = styles + '!sass?sourceMap';
 var lessStyle = styles + '!less?sourceMap';
@@ -32,6 +33,8 @@ var fileLimit = 10000;
 var imgCommonFolder = 'img/common';
 
 var plugins = [
+
+	new styleLintPlugin({syntax: mainStyleType}),
 
 	new SvgStore(
 		[

@@ -20,6 +20,8 @@
     "bourbon": "^4.2.7",
     "jquery": "^2.2.1",
     "normalize-scss": "^5.0.2",
+    "stylelint-config-standard": "^8.0.0",
+    "stylelint-webpack-plugin": "^0.2.0",
     "svg4everybody": "^2.0.3"
   },
   "devDependencies": {

@@ -1,31 +1,35 @@
-html, body {
+/* stylelint-disable block-no-empty  */
+
+html,
+body {
 }
 
 .c-content {
-  font-family: "Open Sans", serif;
-  font-size: 16px;
-  color: $main-color;
-  p {
-  }
-  b, strong {
-  }
-  h1 {
-  }
-  h2 {
-  }
-  h3 {
-  }
-  ul {
-    list-style: none;
-    margin-left: 0;
-    padding: 0px 0px 25px 50px;
-    > li:before {
-      display: inline-block;
-      padding: 5px 0px;
-      content: "\2014";
-      width: 1.3em;
-      margin-left: -1.2em;
-    }
-  }
+	font-family: "Open Sans", serif;
+	font-size: 16px;
+	color: $main-color;
+	p {
+	}
+	b,
+	strong {
+	}
+	h1 {
+	}
+	h2 {
+	}
+	h3 {
+	}
+	ul {
+		list-style: none;
+		margin-left: 0;
+		padding: 0 0 25px 50px;
+		> li::before {
+			display: inline-block;
+			padding: 5px 0;
+			content: "\2014";
+			width: 1.3em;
+			margin-left: -1.2em;
+		}
+	}
 }
 
