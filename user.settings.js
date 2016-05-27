@@ -4,19 +4,26 @@ var path = require('path');
 module.exports = {
 	site: "sitename",
 	port: 8888,
-	docRoot: '../../../..', // '../www'
-	buildPath: '../builds', // '../www/builds'
+	docRoot: '../www',
+	buildPath: '../www/builds',
 	hotPort: 8889,
+	mainStyleType: 'less',
 	entry: {
 		index: ['./src/index.js'],
 		img: ['./src/img.js']
 		// main: ['./src/page/main/main.js']
-
 	},
-	getPublicPath: function getPublicPath(env = 'prod') {
+	hash: {
+		'dev': false,
+		'prod': true
+	},
+
+	getPublicPath: function getPublicPath(env) {
+		env = env || 'prod';
 		return this.getBuildPath(env).replace(path.resolve(this.docRoot), '');
 	},
-	getBuildPath: function getBuildPath(env = 'prod') {
+	getBuildPath: function getBuildPath(env) {
+		env = env || 'prod';
 		return path.resolve(this.buildPath, env != 'hot' ? env : 'dev') + '/';
 	},
 	getUserName: function getUserName() {

@@ -14,12 +14,16 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var SvgStore = require('webpack-svgstore-plugin');
 var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
+var styleLintPlugin = require('stylelint-webpack-plugin');
 
-var addHash = function (template, hash, devHash) {
+var addHash = function(template, hash, devHash) {
 	devHash = devHash || hash;
-	return (production ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) : `${template}?h=[${devHash}]`)
+	return  (production && userSettings.hash.prod ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) :
+		(userSettings.hash.dev ? `${template}?h=[${devHash}]` : template));
 };
 
+
+var mainStyleType = userSettings.mainStyleType;
 var styles = 'css?sourceMap!postcss?sourceMap';
 var sassStyle = styles + '!sass?sourceMap';
 var lessStyle = styles + '!less?sourceMap';
@@ -29,6 +33,11 @@ var fileLimit = 10000;
 var imgCommonFolder = 'img/common';
 
 var plugins = [
+
+	new styleLintPlugin({
+		syntax: mainStyleType,
+		files: ['**/*.s?(a|c)ss', '**/*.less']
+	}),
 
 	new SvgStore(
 		[
@@ -45,7 +54,6 @@ var plugins = [
 			}
 		}
 	),
-
 	new SpritesmithPlugin({
 		src: {
 			cwd: path.resolve(__dirname, 'img/sprite/png'),
@@ -53,7 +61,7 @@ var plugins = [
 		},
 		target: {
 			image: path.resolve(__dirname, 'img/sprite/sprite.png'),
-			css: path.resolve(__dirname, 'src/style/sprite.less')
+			css: path.resolve(__dirname, 'src/style/' + (mainStyleType == 'scss' ? '_' : '') + 'sprite.' + mainStyleType)
 		},
 		apiOptions: {
 			cssImageRef: "~img/sprite/sprite.png"
@@ -95,7 +103,7 @@ var plugins = [
 
 	new webpack.ResolverPlugin([
 		new ComponentResolverPlugin(
-			['js', 'jsx', 'less']
+			['js', 'jsx', 'less', 'sass', 'scss']
 			// array of extensions e.g `['js']` (default: `['jsx', 'js']`)
 		)
 	]),
@@ -164,31 +172,31 @@ if (production) {
 }
 
 module.exports = {
-	debug: !production,
-	devtool: production ? false : 'source-map',
-	devtoolModuleFilenameTemplate: "[absolute-resource-path]",
-	devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
-	entry: userSettings.entry,
-	output: {
-		path: userSettings.getBuildPath(env),
-		filename: addHash('js/[name].js', 'chunkhash', 'hash'),
-		chunkFilename: addHash('js/[name].js', 'chunkhash', 'hash'),
-		publicPath: userSettings.getPublicPath(env)
-	},
+		debug: !production,
+		devtool: production ? false : 'source-map',
+		devtoolModuleFilenameTemplate: "[absolute-resource-path]",
+		devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
+		entry: userSettings.entry,
+		output: {
+			path: userSettings.getBuildPath(env),
+			filename: addHash('js/[name].js', 'chunkhash', 'hash'),
+			chunkFilename: addHash('js/[name].js', 'chunkhash', 'hash'),
+			publicPath: userSettings.getPublicPath(env)
+		},
 
 	resolve: {
 		root: path.resolve('./src'),
-		extensions: ['', '.js', '.less'],
-		alias: {
+			extensions: ['', '.js', '.less', '.sass', '.scss'],
+			alias: {
 			img: 'img',
-			font: 'font'
+				font: 'font'
 		},
 		fallback: ['.', 'img']
 		//     modulesDirectories: ["web_modules", "node_modules", "bower_components"]
 	},
 
 	plugins: plugins,
-	module: {
+		module: {
 		// noParse: [],
 		preLoaders: [
 			{
@@ -196,7 +204,7 @@ module.exports = {
 				loader: 'component-css?ext=less!eslint'
 			}
 		],
-		loaders: [
+			loaders: [
 			{
 				test: /\.js$/,
 				loader: 'babel',
@@ -211,7 +219,7 @@ module.exports = {
 				loader: env != 'hot' ? ExtractTextPlugin.extract("style", "css") : 'style!' + styles
 			},
 			{
-				test: /\.scss$/,
+				test: /\.(scss|sass)$/,
 				// loader: 'style!css?sourceMap!sass?sourceMap'
 				loader: env != 'hot' ? ExtractTextPlugin.extract('style', sassStyle) : 'style!' + sassStyle
 			},
@@ -236,13 +244,13 @@ module.exports = {
 				test: /\.(png|gif|jpe?g|svg)$/i,
 				exclude: path.resolve(__dirname, imgCommonFolder),
 				loaders: [
-					'url?limit=' + fileLimit + '&name=[path][name].[ext]',
+					'url?limit='+fileLimit+'&name=[path][name].[ext]',
 					imageLoader
 				]
 			},
 			{
 				test: /\.woff2?(\?\S*)?$/i,
-				loader: 'url?limit=' + fileLimit + ',name=[path][name].[ext]',
+				loader: 'url?limit='+fileLimit+',name=[path][name].[ext]',
 			},
 			{
 				test: /\.ttf|eot(\?\S*)?$/,
