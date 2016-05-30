@@ -6,8 +6,8 @@ var production = env === 'prod';
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require("path");
-var precss = require('precss');
 var autoprefixer = require('autoprefixer');
+var doiuse = require('doiuse');
 var BowerWebpackPlugin = require("bower-webpack-plugin");
 var ComponentResolverPlugin = require('component-resolver-webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -16,10 +16,30 @@ var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
 
-var addHash = function(template, hash, devHash) {
+
+var addHash = function addTemplateHash(template, hash, devHash) {
 	devHash = devHash || hash;
 	return  (production && userSettings.hash.prod ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) :
 		(userSettings.hash.dev ? `${template}?h=[${devHash}]` : template));
+};
+
+var doiusePartialSupport = function doiusePartialSupportIgnore(usageInfo) {
+	if (usageInfo.featureData.missingData) {
+		var data = usageInfo.featureData.missingData;
+		var onlyPartialSupport = true;
+		for (brName in data) {
+			for (vrName in data[brName]) {
+				if (data[brName][vrName] != 'a') {
+					onlyPartialSupport = false;
+					break;
+				}
+			}
+		}
+		if (onlyPartialSupport) {
+			return false;
+		}
+	}
+	return true;
 };
 
 
@@ -34,7 +54,10 @@ var imgCommonFolder = 'img/common';
 
 var plugins = [
 
-	new styleLintPlugin({syntax: mainStyleType}),
+	new styleLintPlugin({
+		syntax: mainStyleType,
+		files: ['**/*.s?(a|c)ss', '**/*.less']
+	}),
 
 	new SvgStore(
 		[
@@ -257,6 +280,16 @@ module.exports = {
 	},
 
 	postcss: function () {
-		return [precss, autoprefixer];
+		return [
+			autoprefixer({
+				browsers: [userSettings.browsers]
+			}),
+			doiuse({
+				// ignore: ['rem'],
+				browsers: [userSettings.browsers],
+				onFeatureUsage: doiusePartialSupport
+			})
+
+		];
 	}
 };
