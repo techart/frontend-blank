@@ -109,7 +109,7 @@ var plugins = [
 
 	new ExtractTextPlugin(
 		addHash('css/[name].css', 'contenthash'), {
-			allChunks: false
+			allChunks: true // false
 		}
 	),
 
