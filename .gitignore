@@ -1,4 +1,5 @@
 .idea
+sprite.*
 /bower_components/
 /node_modules/
 /test/comparison/
