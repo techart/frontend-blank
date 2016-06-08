@@ -210,8 +210,8 @@ module.exports = {
 			img: 'img',
 				font: 'font'
 		},
-		fallback: ['.', 'img']
-		//     modulesDirectories: ["web_modules", "node_modules", "bower_components"]
+		fallback: ['.', 'img'],
+		modulesDirectories: ["web_modules", "node_modules", "bower_components"]
 	},
 
 	plugins: plugins,
