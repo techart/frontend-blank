@@ -220,7 +220,7 @@ module.exports = {
 		preLoaders: [
 			{
 				test: /\.js$/,
-				loader: 'component-css?ext=less!eslint'
+				loader: 'component-css?ext='+ userSettings.mainStyleType + '!eslint'
 			}
 		],
 			loaders: [
