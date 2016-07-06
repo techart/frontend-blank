@@ -112,8 +112,6 @@ var plugins = [
 		}
 	),
 
-	new webpack.NoErrorsPlugin(),
-
 	new webpack.ProvidePlugin({
 		$: "jquery",
 		jQuery: "jquery",
@@ -172,7 +170,9 @@ if (production) {
 			'process.env': {
 				BABEL_ENV: JSON.stringify(process.env.NODE_ENV)
 			}
-		})
+		}),
+
+		new webpack.NoErrorsPlugin()
 
 	]);
 } else {
