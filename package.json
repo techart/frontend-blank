@@ -11,7 +11,7 @@
     "test-comparison": "casperjs test test/comparison.js --user=`whoami` || true",
     "pkg": "npm install && bower install",
     "install-tests": "sudo npm i -g fs phantomcss resemblejs casperjs phantomjs",
-    "install-main": "sudo npm i -g bower webpack babel",
+    "install-main": "sudo npm i -g bower webpack babel-cli",
     "lock": "npm shrinkwrap --dev && bower i --reset-shrinkwrap"
   },
   "repository": {

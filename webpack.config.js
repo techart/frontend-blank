@@ -109,11 +109,9 @@ var plugins = [
 
 	new ExtractTextPlugin(
 		addHash('css/[name].css', 'contenthash'), {
-			allChunks: false
+			allChunks: true // false
 		}
 	),
-
-	new webpack.NoErrorsPlugin(),
 
 	new webpack.ProvidePlugin({
 		$: "jquery",
@@ -173,7 +171,9 @@ if (production) {
 			'process.env': {
 				BABEL_ENV: JSON.stringify(process.env.NODE_ENV)
 			}
-		})
+		}),
+
+		new webpack.NoErrorsPlugin()
 
 	]);
 } else {
@@ -211,8 +211,8 @@ module.exports = {
 			img: 'img',
 				font: 'font'
 		},
-		fallback: ['.', 'img']
-		//     modulesDirectories: ["web_modules", "node_modules", "bower_components"]
+		fallback: ['.', 'img'],
+		modulesDirectories: ["web_modules", "node_modules", "bower_components"]
 	},
 
 	plugins: plugins,
@@ -221,7 +221,7 @@ module.exports = {
 		preLoaders: [
 			{
 				test: /\.js$/,
-				loader: 'component-css?ext=less!eslint'
+				loader: 'component-css?ext='+ userSettings.mainStyleType + '!eslint'
 			}
 		],
 			loaders: [
