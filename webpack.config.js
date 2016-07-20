@@ -281,11 +281,11 @@ module.exports = {
 	postcss: function () {
 		return [
 			autoprefixer({
-				browsers: [userSettings.browsers]
+				browsers: userSettings.browsers
 			}),
 			doiuse({
 				// ignore: ['rem'],
-				browsers: [userSettings.browsers],
+				browsers: userSettings.browsers,
 				onFeatureUsage: doiusePartialSupport
 			})
 
