@@ -19,7 +19,7 @@ var styleLintPlugin = require('stylelint-webpack-plugin');
 
 var addHash = function addTemplateHash(template, hash, devHash) {
 	devHash = devHash || hash;
-	return  (production && userSettings.hash.prod ? template.replace(/\.[^.]+$/, `.[${hash}]$&`) :
+	return  (production && userSettings.hash.prod ? template.replace(/\.[^.]+$/, `/[${hash}:3]/[${hash}]$&`) :
 		(userSettings.hash.dev ? `${template}?h=[${devHash}]` : template));
 };
 
@@ -86,10 +86,6 @@ var plugins = [
 		apiOptions: {
 			cssImageRef: "~img/sprite/sprite.png"
 		}
-	}),
-
-	new CleanWebpackPlugin(path.resolve(userSettings.getBuildPath(env)), {
-		root: path.resolve(__dirname, '..')  //TODO: is this OK?
 	}),
 
 	new BowerWebpackPlugin({
@@ -177,6 +173,11 @@ if (production) {
 
 	]);
 } else {
+	plugins = plugins.concat([
+		new CleanWebpackPlugin(path.resolve(userSettings.getBuildPath(env)), {
+			root: path.resolve(__dirname, '..')  //TODO: is this OK?
+		}),
+	]);
 	// plugins = plugins.concat([
 	//     new webpack.SourceMapDevToolPlugin({
 	//         filename: '[file].map',
