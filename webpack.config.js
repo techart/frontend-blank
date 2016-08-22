@@ -225,7 +225,8 @@ module.exports = {
 				loader: 'component-css?ext='+ userSettings.mainStyleType + '!eslint'
 			}
 		],
-			loaders: [
+		loaders: [
+			{ test: require.resolve('jquery'), loader: 'expose?jQuery!expose?$' },
 			{
 				test: /\.js$/,
 				loader: 'babel',
