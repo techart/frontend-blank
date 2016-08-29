@@ -18,6 +18,9 @@ module.exports = {
 		'dev': false,
 		'prod': true
 	},
+	
+	exposeGlobal: [{'module': 'jquery', 'names': ['jQuery', '$']}],
+	aliasGlobal: ['jquery'],
 
 	getPublicPath: function getPublicPath(env) {
 		env = env || 'prod';

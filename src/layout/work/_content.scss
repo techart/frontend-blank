@@ -8,21 +8,28 @@ body {
 	font-family: "Open Sans", serif;
 	font-size: 16px;
 	color: $main-color;
+
 	p {
 	}
+
 	b,
 	strong {
 	}
+
 	h1 {
 	}
+
 	h2 {
 	}
+
 	h3 {
 	}
+
 	ul {
 		list-style: none;
 		margin-left: 0;
 		padding: 0 0 25px 50px;
+
 		> li::before {
 			display: inline-block;
 			padding: 5px 0;
