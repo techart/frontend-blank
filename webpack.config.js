@@ -311,7 +311,6 @@ if (userSettings.aliasGlobal) {
     userSettings.aliasGlobal.forEach(function (name) {
         _export.resolve.alias[name] = require.resolve('jquery')
     });
-    console.log(_export.resolve.alias);
 }
 
 module.exports = _export;
