@@ -309,7 +309,7 @@ if (userSettings.exposeGlobal) {
 
 if (userSettings.aliasGlobal) {
     userSettings.aliasGlobal.forEach(function (name) {
-        _export.resolve.alias[name] = require.resolve('jquery')
+        _export.resolve.alias[name] = require.resolve(name);
     });
 }
 
