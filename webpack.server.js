@@ -23,7 +23,7 @@ var webpackServer = new WebpackDevServer(webpack(webpackConfig), {
 	publicPath: webpackConfig.output.publicPath,
 	hot: true,
 	historyApiFallback: true,
-	stats: {colors: true},
+	stats: userSettings.stats,
 	headers: {
 		"Access-Control-Allow-Origin": "*",
 		"Access-Control-Allow-Headers": "*",
