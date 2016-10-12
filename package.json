@@ -4,10 +4,10 @@
   "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
-    "start": "node webpack.server.js",
-    "watch": "NODE_ENV=dev webpack --progress --colors --watch",
+    "start": "NODE_ENV=hot node webpack.server.js",
+    "watch": "NODE_ENV=dev webpack --progress --watch",
     "build-prod": "NODE_ENV=prod webpack",
-    "build-dev": "NODE_ENV=dev webpack --display-modules --display-chuncks --profile  --colors",
+    "build-dev": "NODE_ENV=dev webpack",
     "test-comparison": "casperjs test test/comparison.js --user=`whoami` || true",
     "pkg": "npm install && bower install",
     "install-tests": "sudo npm i -g fs phantomcss resemblejs casperjs phantomjs",

@@ -126,9 +126,14 @@ var plugins = [
         path: __dirname,
         prettyPrint: true
     })
-
 ];
-
+if (env != 'hot') {
+    plugins = plugins.concat([
+        new CleanWebpackPlugin(path.resolve(userSettings.getBuildPath(env)), {
+            root: path.resolve(__dirname, '..')  //TODO: is this OK?
+        }),
+    ]);
+}
 if (production) {
     plugins = plugins.concat([
 
@@ -171,24 +176,6 @@ if (production) {
         new webpack.NoErrorsPlugin()
 
     ]);
-} else {
-    plugins = plugins.concat([
-        new CleanWebpackPlugin(path.resolve(userSettings.getBuildPath(env)), {
-            root: path.resolve(__dirname, '..')  //TODO: is this OK?
-        }),
-    ]);
-    // plugins = plugins.concat([
-    //     new webpack.SourceMapDevToolPlugin({
-    //         filename: '[file].map',
-    //         // columns: false,
-    //         module: true,
-    //         moduleFilenameTemplate: "[absolute-resource-path]",
-    //         fallbackModuleFilenameTemplate: "[absolute-resource-path]"
-    //     }
-    //         // '[file].map', null,
-    //         // "[absolute-resource-path]", "[absolute-resource-path]"
-    //     )
-    // ]);
 }
 
 var _export = {
@@ -216,6 +203,8 @@ var _export = {
     },
 
     plugins: plugins,
+    profile: false,
+    stats: userSettings.stats,
     module: {
         // noParse: [],
         preLoaders: [
@@ -285,7 +274,7 @@ var _export = {
                 browsers: userSettings.browsers
             }),
             doiuse({
-                // ignore: ['rem'],
+		// ignore: ['rem'],
                 browsers: userSettings.browsers,
                 onFeatureUsage: doiusePartialSupport
             })
