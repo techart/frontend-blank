@@ -10,15 +10,32 @@ module.exports = {
 	mainStyleType: 'scss',
 	browsers: 'ie >= 10, last 2 versions',
 	entry: {
+		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку 
+		//common: ['jquery'], // По умолчанию все общие части собираеются в файл index.js
 		index: ['./src/index.js'],
-		img: ['./src/img.js']
+		'.img': ['./src/.img.js'],
+		// Создания дополнительной точки входа нужно. До дополнительной тчки входа обязательно должен быть подключен файл с общими частями
 		// main: ['./src/page/main/main.js']
 	},
 	hash: {
 		'dev': false,
 		'prod': true
 	},
-	
+	stats: {
+		hash: false,
+		version: false,
+		timings: false,
+		assets: false,
+		chunks: false,
+		modules: false,
+		children: false,
+		source: false,
+		errors: true,
+		errorDetails: true,
+		warnings: true,
+		colors: true,
+	},
+
 	exposeGlobal: [{'module': 'jquery', 'names': ['jQuery', '$']}],
 	aliasGlobal: ['jquery'],
 
