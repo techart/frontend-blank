@@ -8,7 +8,7 @@ module.exports = {
 	buildPath: '../www/builds',
 	hotPort: 8889,
 	mainStyleType: 'scss',
-	browsers: 'ie >= 10, last 2 versions',
+	browsers: 'ie >= 10, Safari >= 5, last 5 versions',
 	entry: {
 		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку 
 		//common: ['jquery'], // По умолчанию все общие части собираеются в файл index.js
