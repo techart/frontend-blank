@@ -198,8 +198,11 @@ var _export = {
             img: 'img',
             font: 'font'
         },
-        fallback: ['.', 'img'],
+        fallback: ['.', 'img', path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")],
         modulesDirectories: ["web_modules", "node_modules", "bower_components"]
+    },
+    resolveLoader: {
+        fallback: [path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")]
     },
 
     plugins: plugins,
@@ -210,7 +213,12 @@ var _export = {
         preLoaders: [
             {
                 test: /\.js$/,
-                loader: 'component-css?ext=' + userSettings.mainStyleType + '!eslint'
+                loader: 'component-css?ext='+ userSettings.mainStyleType
+            },
+            {
+                test: /\.js$/,
+                include: __dirname + '/src',
+                loader: 'eslint'
             }
         ],
         loaders: [
