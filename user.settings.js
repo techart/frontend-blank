@@ -1,14 +1,15 @@
 var child_process = require('child_process');
 var path = require('path');
+var fs = require('fs');
 
-module.exports = {
+var settings = {
 	site: "sitename",
 	port: 8888,
 	docRoot: '../www',
 	buildPath: '../www/builds',
 	hotPort: 8889,
 	mainStyleType: 'scss',
-	browsers: 'ie >= 10, Safari >= 5, last 5 versions',
+	browsers: ['ie >= 10', 'Safari >= 5', 'last 5 versions'],
 	entry: {
 		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку 
 		//common: ['jquery'], // По умолчанию все общие части собираеются в файл index.js
@@ -38,6 +39,20 @@ module.exports = {
 
 	exposeGlobal: [{'module': 'jquery', 'names': ['jQuery', '$']}],
 	aliasGlobal: ['jquery'],
+
+	setupBrowsers: function() {
+		var filepath = process.env.BROWSERSLIST_CONFIG;
+		if (filepath) {
+			var contents = fs.readFileSync(filepath, 'utf8');
+			var list = contents.split(/\r?\n/);
+			for (var i = 0; i < list.length; i++) {
+				list[i] = list[i].trim();
+			}
+			if (list.length) {
+				this.browsers = list;
+			}
+		}
+	},
 
 	getPublicPath: function getPublicPath(env) {
 		env = env || 'prod';
@@ -73,3 +88,7 @@ module.exports = {
 		return 'http://' + this.hotHost() + (this.hotPort ? ':' + this.hotPort : '');
 	}
 };
+
+settings.setupBrowsers();
+
+module.exports = settings;
