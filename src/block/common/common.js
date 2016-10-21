@@ -1,8 +1,5 @@
 function requireAll(r) {
-    r.keys().map(function(key) {
-        if (key.split('/').length <= 3) {
-            return r(key);
-        }
-    });
+    r.keys().forEach(r);
 }
-requireAll(require.context('.', true, /[^twig]$/));
+
+requireAll(require.context('.', true, /^\.\/[^/]+\/[^/.]+(\.(?!(twig))([^.]+))?$/));
