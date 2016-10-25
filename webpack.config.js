@@ -22,26 +22,6 @@ var addHash = function addTemplateHash(template, hash, devHash) {
         (userSettings.hash.dev ? `${template}?h=[${devHash}]` : template));
 };
 
-var doiusePartialSupport = function doiusePartialSupportIgnore(usageInfo) {
-    if (usageInfo.featureData.missingData) {
-        var data = usageInfo.featureData.missingData;
-        var onlyPartialSupport = true;
-        for (brName in data) {
-            for (vrName in data[brName]) {
-                if (data[brName][vrName] != 'a') {
-                    onlyPartialSupport = false;
-                    break;
-                }
-            }
-        }
-        if (onlyPartialSupport) {
-            return false;
-        }
-    }
-    return true;
-};
-
-
 var mainStyleType = userSettings.mainStyleType;
 var styles = 'css?sourceMap!postcss?sourceMap';
 var sassStyle = styles + '!sass?sourceMap&precision=6';
@@ -284,7 +264,7 @@ var _export = {
             doiuse({
 		// ignore: ['rem'],
                 browsers: userSettings.browsers,
-                onFeatureUsage: doiusePartialSupport
+                ignoreFiles: ['node_modules/**/*', 'bower_components/**/*']
             })
 
         ];
