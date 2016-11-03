@@ -16,6 +16,10 @@ var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
 
+var applyPolyfill = function applyBabelPolyfill(entry) {
+    entry[Object.keys(entry)[0]].push('babel-polyfill');
+    return entry;
+};
 
 var addHash = function addTemplateHash(template, hash, devHash) {
     devHash = devHash || hash;
@@ -164,7 +168,7 @@ var _export = {
     devtool: production ? false : 'source-map',
     devtoolModuleFilenameTemplate: "[absolute-resource-path]",
     devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
-    entry: userSettings.entry,
+    entry: applyPolyfill(userSettings.entry),
     output: {
         path: userSettings.getBuildPath(env),
         filename: addHash('js/[name].js', 'chunkhash', 'hash'),
