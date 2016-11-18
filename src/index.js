@@ -1,17 +1,11 @@
-import $ from 'jquery';
-import svg4everybody from 'svg4everybody';
-
-import 'block/common';
+import App from 'app/app';
+import settings from 'app/settings';
+import Container from 'app/container';
 import 'layout/work';
-
-svg4everybody();
+import 'block/common';
 
 (function() {
-
-    if ($('body').hasClass('c-homepage')) {
-        require.ensure([], (require) => {
-            require('page/main');
-        }, 'main');
-    }
-
+	var app = new App(settings, new Container('container'));
+	app.init();
+	app.animate();
 })();

@@ -96,7 +96,8 @@ var plugins = [
     new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
-        "window.jQuery": "jquery"
+        "window.jQuery": "jquery",
+        THREE: "three"
     }),
 
     new webpack.ResolverPlugin([
@@ -214,6 +215,10 @@ var _export = {
                 query: {
                     presets: ['es2015']
                 }
+            },
+            {
+                test: /\.json$/,
+                loader: 'json'
             },
             // Extract css files
             {
