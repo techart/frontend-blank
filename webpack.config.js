@@ -17,9 +17,7 @@ var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
 
 var applyPolyfill = function applyBabelPolyfill(entry) {
-    var first = Object.keys(entry)[0];
-    entry[first].push('babel-polyfill');
-    entry[first].reverse();
+    entry[Object.keys(entry)[0]].unshift('babel-polyfill');
     return entry;
 };
 
