@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 
 var settings = {
-	site: "sitename",
+	site: "cedral",
 	port: 8888,
 	docRoot: '../www',
 	buildPath: '../www/builds',
@@ -88,7 +88,5 @@ var settings = {
 		return 'http://' + this.hotHost() + (this.hotPort ? ':' + this.hotPort : '');
 	}
 };
-
-settings.setupBrowsers();
 
 module.exports = settings;

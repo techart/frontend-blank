@@ -1,22 +1,10 @@
-var fs = require( 'fs' );
-var workDir = fs.workingDirectory;
-var global_modules = '/usr/local/lib/node_modules';
-if (!fs.exists(global_modules)) {
-    global_modules = '/usr/lib/node_modules';
-}
-
 var phantomcss = require('phantomcss');
-var child_process = require('child_process');
-var user = require(workDir + '/user.settings');
-user.name = casper.cli.options.user;
-settings = require(workDir + '/test.comparison.js');
-
+var settings = require('../test.comparison.js');
 
 phantomcss.init( {
     rebase: casper.cli.get("rebase"),
     casper: casper,
-    libraryRoot: fs.absolute( global_modules + '/phantomcss' ),
-    screenshotRoot: fs.absolute( workDir + "/" + settings.screenshotRoot ),
+    screenshotRoot: settings.screenshotRoot,
     failedComparisonsRoot: false,
     addLabelToFailedImage: false,
     addIteratorToImage: false,
