@@ -1,17 +1,19 @@
-var child_process = require('child_process');
-var path = require('path');
-var fs = require('fs');
+if (typeof process != 'undefined') {
+	var path = require('path');
+	var fs = require('fs');
+	var child_process = require('child_process');
+}
 
 var settings = {
 	site: "sitename",
-	port: 8888,
+	port: 80,
 	docRoot: '../www',
 	buildPath: '../www/builds',
 	hotPort: 8889,
 	mainStyleType: 'scss',
 	browsers: ['ie >= 10', 'Safari >= 5', 'last 5 versions'],
 	entry: {
-		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку 
+		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку
 		//common: ['jquery'], // По умолчанию все общие части собираеются в файл index.js
 		index: ['./src/index.js'],
 		'.img': ['./src/.img.js'],
@@ -64,6 +66,9 @@ var settings = {
 	},
 	getUserName: function getUserName() {
 		try {
+			if (typeof casper != 'undefined') {
+				return casper.cli.options.user;
+			}
 			return String(child_process.execSync("whoami", {encoding: 'utf8'})).trim();
 		} catch (e) {
 			return null;
@@ -88,7 +93,5 @@ var settings = {
 		return 'http://' + this.hotHost() + (this.hotPort ? ':' + this.hotPort : '');
 	}
 };
-
-settings.setupBrowsers();
 
 module.exports = settings;

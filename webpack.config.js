@@ -1,4 +1,5 @@
 var userSettings = require('./user.settings');
+userSettings.setupBrowsers();
 
 var env = process.env.NODE_ENV || 'hot';
 var production = env === 'prod';
