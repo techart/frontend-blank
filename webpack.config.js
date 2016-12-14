@@ -270,7 +270,7 @@ var _export = {
             doiuse({
 		// ignore: ['rem'],
                 browsers: userSettings.browsers,
-                ignoreFiles: ['node_modules/**/*', 'bower_components/**/*']
+                ignoreFiles: ['/**/node_modules/**/*', 'node_modules/**/*', '/**/bower_components/**/*', 'bower_components/**/*']
             })
 
         ];
