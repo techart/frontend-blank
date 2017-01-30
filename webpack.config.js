@@ -185,7 +185,7 @@ var _export = {
             font: 'font'
         },
         fallback: ['.', 'img', path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")],
-        modulesDirectories: ["web_modules", "node_modules", "bower_components"]
+        modulesDirectories: ["web_modules", "node_modules/@webtechart", "node_modules", "bower_components"]
     },
     resolveLoader: {
         fallback: [path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")]
