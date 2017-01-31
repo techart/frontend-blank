@@ -64,7 +64,7 @@
     "stylelint-webpack-plugin": "^0.5.1",
     "svg4everybody": "^2.0.3",
     "url-loader": "^0.5.7",
-    "webpack": "latest",
+    "webpack": "^1.x",
     "webpack-dev-server": "^1.14.1",
     "webpack-spritesmith": "^0.2.0",
     "webpack-svgstore-plugin": "^3.0.3"
