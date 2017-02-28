@@ -1,0 +1,11 @@
+.idea
+sprite.*
+_sprite.*
+/bower_components/
+/node_modules/
+/test/comparison/
+/tmp
+/assets/*
+!/assets/.gitkeep
+*.log
+*~

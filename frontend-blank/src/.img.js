@@ -1,0 +1,1 @@
+require.context('../img/common', true, /^\.\/.*\.(png|gif|jpe?g|svg)$/);
