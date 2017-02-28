@@ -258,6 +258,10 @@ var _export = {
             {
                 test: /\.ttf|eot(\?\S*)?$/,
                 loader: 'file?name=[path][name].[ext]'
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
     },
