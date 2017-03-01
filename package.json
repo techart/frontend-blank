@@ -1,7 +1,7 @@
 {
   "name": "tao-webpack",
-  "version": "1.0.3",
-  "description": "Webpack for TAO ",
+  "version": "1.0.4",
+  "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
     "start": "BROWSERSLIST_CONFIG=./.browserslist NODE_ENV=hot node webpack.server.js",
