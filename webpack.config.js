@@ -70,6 +70,9 @@ var plugins = [
         },
         apiOptions: {
             cssImageRef: "~img/sprite/sprite.png"
+        },
+        spritesmithOptions: {
+            padding: 2,
         }
     }),
 
