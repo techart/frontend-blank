@@ -1,6 +1,6 @@
 {
   "name": "tao-webpack",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
@@ -57,6 +57,7 @@
     "node-sass": "3.13.1",
     "path": "^0.12.7",
     "postcss-loader": "^0.13.0",
+    "resolve-url-loader": "^2.0.2",
     "rimraf": "^2.5.2",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.0",

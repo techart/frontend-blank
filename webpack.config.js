@@ -30,7 +30,7 @@ var addHash = function addTemplateHash(template, hash, devHash) {
 
 var mainStyleType = userSettings.mainStyleType;
 var styles = 'css?sourceMap!postcss?sourceMap';
-var sassStyle = styles + '!sass?sourceMap&precision=6';
+var sassStyle = styles + '!resolve-url!sass?sourceMap&precision=6';
 var lessStyle = styles + '!less?sourceMap';
 var imageLoader = 'image?bypassOnDebug&optimizationLevel=7&interlaced=false';
 //'image?{bypassOnDebug: true, progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
