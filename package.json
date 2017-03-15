@@ -1,6 +1,6 @@
 {
   "name": "tao-webpack",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.s.intranet:core/frontend-blank.git"
+    "url": "https://github.com/techart/frontend-blank.git"
   },
   "author": "web@techart.ru",
   "license": "ISC",
