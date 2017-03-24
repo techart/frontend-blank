@@ -1,5 +1,4 @@
 var userSettings = require('./user.settings');
-userSettings.setupBrowsers();
 
 var env = process.env.NODE_ENV || 'hot';
 var production = env === 'prod';
@@ -7,12 +6,8 @@ var production = env === 'prod';
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require("path");
-var autoprefixer = require('autoprefixer');
-var doiuse = require('@webtechart/doiuse');
-var BowerWebpackPlugin = require("bower-webpack-plugin");
-var ComponentResolverPlugin = require('component-resolver-webpack');
+var DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-var SvgStore = require('webpack-svgstore-plugin');
 var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
@@ -29,10 +24,10 @@ var addHash = function addTemplateHash(template, hash, devHash) {
 };
 
 var mainStyleType = userSettings.mainStyleType;
-var styles = 'css?sourceMap!postcss?sourceMap';
-var sassStyle = styles + '!resolve-url!sass?sourceMap&precision=6';
-var lessStyle = styles + '!less?sourceMap';
-var imageLoader = 'image?bypassOnDebug&optimizationLevel=7&interlaced=false';
+var styles = 'css-loader?sourceMap!postcss-loader?sourceMap';
+var sassStyle = styles + '!resolve-url-loader!sass-loader?sourceMap&precision=6';
+var lessStyle = styles + '!less-loader?sourceMap';
+var imageLoader = 'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false';
 //'image?{bypassOnDebug: true, progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
 var fileLimit = 10000;
 var imgCommonFolder = 'img/common';
@@ -44,21 +39,6 @@ var plugins = [
         files: ['**/*.s?(a|c)ss', '**/*.less']
     }),
 
-    new SvgStore(
-        [
-            path.join('.', 'img', 'sprite', 'svg', '**/*.svg')
-        ],
-        'img',
-        {
-            name: 'sprite/sprite.svg',
-            prefix: 's-',
-            svgoOptions: {
-                plugins: [
-                    {removeTitle: true}
-                ]
-            }
-        }
-    ),
     new SpritesmithPlugin({
         src: {
             cwd: path.resolve(__dirname, 'img/sprite/png'),
@@ -76,10 +56,6 @@ var plugins = [
         }
     }),
 
-    new BowerWebpackPlugin({
-        searchResolveModulesDirectories: false
-    }),
-
     new webpack.DefinePlugin({
         NODE_ENV: JSON.stringify(env)
     }),
@@ -91,8 +67,8 @@ var plugins = [
         minChunks: 2 // How many times a dependency must come up before being extracted
     }),
 
-    new ExtractTextPlugin(
-        addHash('css/[name].css', 'contenthash'), {
+    new ExtractTextPlugin({
+            filename: addHash('css/[name].css', 'contenthash'),
             allChunks: true // false
         }
     ),
@@ -102,13 +78,6 @@ var plugins = [
         jQuery: "jquery",
         "window.jQuery": "jquery"
     }),
-
-    new webpack.ResolverPlugin([
-        new ComponentResolverPlugin(
-            ['js', 'jsx', 'less', 'sass', 'scss']
-            // array of extensions e.g `['js']` (default: `['jsx', 'js']`)
-        )
-    ]),
 
     new AssetsPlugin({
         filename: path.join('assets', env + '.json'),
@@ -125,15 +94,6 @@ if (env != 'hot') {
 }
 if (production) {
     plugins = plugins.concat([
-
-        // This plugin looks for similar chunks and files
-        // and merges them for better caching by the user
-        new webpack.optimize.DedupePlugin(),
-
-        // This plugins optimizes chunks and modules by
-        // how much they are used in your app
-        new webpack.optimize.OccurenceOrderPlugin(),
-
         // This plugin prevents Webpack from creating chunks
         // that would be too small to be worth loading separately
         // new webpack.optimize.MinChunkSizePlugin({
@@ -145,9 +105,6 @@ if (production) {
         // This plugin minifies all the Javascript code of the final bundle
         new webpack.optimize.UglifyJsPlugin({
             mangle: true,
-            compress: {
-                warnings: false // Suppress uglification warnings
-            }
         }),
 
         // This plugins defines various variables that we can set to false
@@ -162,58 +119,74 @@ if (production) {
             }
         }),
 
-        new webpack.NoErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin()
 
+    ]);
+} else {
+    plugins = plugins.concat([
+        new webpack.LoaderOptionsPlugin({
+            debug: true
+        })
     ]);
 }
 
 var _export = {
-    debug: !production,
     devtool: production ? false : 'source-map',
-    devtoolModuleFilenameTemplate: "[absolute-resource-path]",
-    devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
     entry: applyPolyfill(userSettings.entry),
     output: {
         path: userSettings.getBuildPath(env),
         filename: addHash('js/[name].js', 'chunkhash', 'hash'),
         chunkFilename: addHash('js/[name].js', 'chunkhash', 'hash'),
-        publicPath: userSettings.getPublicPath(env)
+        publicPath: userSettings.getPublicPath(env),
+        devtoolModuleFilenameTemplate: "[absolute-resource-path]",
+        devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
     },
 
     resolve: {
-        root: path.resolve('./src'),
-        extensions: ['', '.js', '.less', '.sass', '.scss'],
+        extensions: ['.js', '.less', '.sass', '.scss'],
         alias: {
             img: 'img',
             font: 'font'
         },
-        fallback: ['.', 'img', path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")],
-        modulesDirectories: ["web_modules", "node_modules/@webtechart", "node_modules", "bower_components"]
+        modules: [
+            path.join(__dirname, "src"),
+            '.',
+            'img',
+            path.join(__dirname, "node_modules", "@webtechart"),
+            path.join(__dirname, "node_modules"),
+            path.join(__dirname, "bower_components")
+        ],
+        plugins: [
+            new DirectoryNamedWebpackPlugin(),
+        ],
     },
     resolveLoader: {
-        fallback: [path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")]
+        modules: [path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")]
     },
 
     plugins: plugins,
     profile: false,
     stats: userSettings.stats,
+    node: {
+        fs: 'empty',
+        net: 'empty',
+    },
     module: {
-        // noParse: [],
-        preLoaders: [
-            {
-                test: /\.js$/,
-                loader: 'component-css?ext='+ userSettings.mainStyleType
-            },
-            {
-                test: /\.js$/,
-                include: __dirname + '/src',
-                loader: 'eslint'
-            }
-        ],
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel',
+                enforce: "pre",
+                loader: 'component-css-loader?ext='+ userSettings.mainStyleType
+            },
+            {
+                test: /\.js$/,
+                enforce: "pre",
+                include: __dirname + '/src',
+                loader: 'eslint-loader'
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
                 include: __dirname + '/src',
                 query: {
                     presets: ['es2015']
@@ -222,27 +195,27 @@ var _export = {
             // Extract css files
             {
                 test: /\.css$/,
-                loader: env != 'hot' ? ExtractTextPlugin.extract("style", "css") : 'style!' + styles
+                loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"}) : 'style-loader!' + styles
             },
             {
                 test: /\.(scss|sass)$/,
                 // loader: 'style!css?sourceMap!sass?sourceMap'
-                loader: env != 'hot' ? ExtractTextPlugin.extract('style', sassStyle) : 'style!' + sassStyle
+                loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: sassStyle}) : 'style-loader!' + sassStyle
             },
             {
                 test: /\.less$/,
                 // loader: 'style!css?sourceMap!less?sourceMap'
-                loader: env != 'hot' ? ExtractTextPlugin.extract('style', lessStyle) : 'style!' + lessStyle
+                loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: lessStyle}) : 'style!' + lessStyle
             },
             {
                 test: /\.html$/,
-                loader: 'html',
+                loader: 'html-loader',
             },
             {
                 test: /\.(png|gif|jpe?g|svg)$/i,
                 include: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
-                    'file?name=[path][name].[ext]',
+                    'file-loader?name=[path][name].[ext]',
                     imageLoader
                 ]
             },
@@ -250,17 +223,17 @@ var _export = {
                 test: /\.(png|gif|jpe?g|svg)$/i,
                 exclude: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
-                    'url?limit=' + fileLimit + '&name=[path][name].[ext]',
+                    'url-loader?limit=' + fileLimit + '&name=[path][name].[ext]',
                     imageLoader
                 ]
             },
             {
                 test: /\.woff2?(\?\S*)?$/i,
-                loader: 'url?limit=' + fileLimit + ',name=[path][name].[ext]',
+                loader: 'url-loader?limit=' + fileLimit + ',name=[path][name].[ext]',
             },
             {
                 test: /\.ttf|eot(\?\S*)?$/,
-                loader: 'file?name=[path][name].[ext]'
+                loader: 'file-loader?name=[path][name].[ext]'
             },
             {
                 test: /\.json$/,
@@ -268,27 +241,13 @@ var _export = {
             }
         ]
     },
-
-    postcss: function () {
-        return [
-            autoprefixer({
-                browsers: userSettings.browsers
-            }),
-            doiuse({
-		// ignore: ['rem'],
-                browsers: userSettings.browsers,
-                ignoreFiles: ['/**/node_modules/**/*', 'node_modules/**/*', '/**/bower_components/**/*', 'bower_components/**/*']
-            })
-
-        ];
-    }
 };
 
 if (userSettings.exposeGlobal) {
     userSettings.exposeGlobal.forEach(function (item) {
         var query = [];
         item.names.forEach(function (name) {
-            query.push('expose?' + name);
+            query.push('expose-loader?' + name);
         });
         _export.module.loaders.unshift({
             test: require.resolve(item.module),
