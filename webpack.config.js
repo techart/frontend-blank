@@ -36,7 +36,7 @@ var plugins = [
 
     new styleLintPlugin({
         syntax: mainStyleType,
-        files: ['**/*.s?(a|c)ss', '**/*.less']
+        files: ['/**/src/**/*.s?(a|c)ss', '/**/src/**/*.less']
     }),
 
     new SpritesmithPlugin({

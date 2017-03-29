@@ -5,6 +5,10 @@
     "no-invalid-double-slash-comments": null
   },
   "ignoreFiles": [
-  	"**/*sprite.*"
+    "**/*sprite.*",
+    "/**/node_modules/**/*",
+    "node_modules/**/*",
+    '/**/bower_components/**/*',
+    'bower_components/**/*'
   ]
 }
