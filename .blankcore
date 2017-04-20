@@ -4,5 +4,3 @@
 webpack.config.js
 webpack.server.js
 package.json
--directives
-no_browser_list = 1
