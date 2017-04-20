@@ -24,7 +24,8 @@ var addHash = function addTemplateHash(template, hash, devHash) {
 };
 
 var mainStyleType = userSettings.mainStyleType;
-var styles = 'css-loader?sourceMap!postcss-loader?sourceMap';
+var cssloader = (production ? 'css-loader?sourceMap&minimize' : 'css-loader?sourceMap');
+var styles = cssloader + '!postcss-loader?sourceMap';
 var sassStyle = styles + '!resolve-url-loader!sass-loader?sourceMap&precision=6';
 var lessStyle = styles + '!less-loader?sourceMap';
 var imageLoader = 'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false';

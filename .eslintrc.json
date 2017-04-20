@@ -6,17 +6,18 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "$": true
+  },
   "parserOptions": {
     "env": "browser",
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      //"jsx": true,
       "modules": true
     }
   },
   "rules": {
-    //"no-undef": 0,
     "no-console": 0
   }
 }

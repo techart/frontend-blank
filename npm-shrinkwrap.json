@@ -1,6 +1,6 @@
 {
   "name": "tao-webpack",
-  "version": "1.1.0",
+  "version": "2.0.1",
   "dependencies": {
     "abbrev": {
       "version": "1.1.0",
@@ -32,10 +32,6 @@
       "version": "1.1.0",
       "dev": true,
       "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        },
         "lodash.defaults": {
           "version": "3.1.2",
           "dev": true,
@@ -265,7 +261,13 @@
     },
     "babel-loader": {
       "version": "6.2.10",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "babel-messages": {
       "version": "6.23.0",
@@ -757,7 +759,13 @@
     },
     "component-css-loader": {
       "version": "0.1.0",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "compressible": {
       "version": "2.0.9",
@@ -894,8 +902,14 @@
       "dev": true
     },
     "css-loader": {
-      "version": "0.25.0",
-      "dev": true
+      "version": "0.28.0",
+      "dev": true,
+      "dependencies": {
+        "css-selector-tokenizer": {
+          "version": "0.7.0",
+          "dev": true
+        }
+      }
     },
     "css-rule-stream": {
       "version": "1.1.0",
@@ -1283,13 +1297,7 @@
     },
     "eslint-loader": {
       "version": "1.6.3",
-      "dev": true,
-      "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        }
-      }
+      "dev": true
     },
     "espree": {
       "version": "3.4.0",
@@ -1417,13 +1425,7 @@
     },
     "extract-text-webpack-plugin": {
       "version": "2.0.0",
-      "dev": true,
-      "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        }
-      }
+      "dev": true
     },
     "extsprintf": {
       "version": "1.0.2",
@@ -1473,7 +1475,13 @@
     },
     "file-loader": {
       "version": "0.9.0",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "file-type": {
       "version": "3.9.0",
@@ -1847,13 +1855,7 @@
     },
     "html-loader": {
       "version": "0.4.5",
-      "dev": true,
-      "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        }
-      }
+      "dev": true
     },
     "html-minifier": {
       "version": "3.3.3",
@@ -1922,7 +1924,13 @@
     },
     "image-webpack-loader": {
       "version": "2.0.0",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "imagemin": {
       "version": "5.2.2",
@@ -1952,6 +1960,10 @@
       "version": "0.6.5",
       "dev": true,
       "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        },
         "source-map": {
           "version": "0.1.43",
           "dev": true
@@ -2337,7 +2349,13 @@
     },
     "less-loader": {
       "version": "2.2.3",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "levn": {
       "version": "0.3.0",
@@ -2352,7 +2370,7 @@
       "dev": true
     },
     "loader-utils": {
-      "version": "0.2.17",
+      "version": "1.0.2",
       "dev": true
     },
     "lodash": {
@@ -2395,10 +2413,6 @@
       "version": "3.1.1",
       "dev": true
     },
-    "lodash._createcompounder": {
-      "version": "3.0.0",
-      "dev": true
-    },
     "lodash._getnative": {
       "version": "3.9.1",
       "dev": true
@@ -2428,15 +2442,11 @@
       "dev": true
     },
     "lodash.camelcase": {
-      "version": "3.0.1",
+      "version": "4.3.0",
       "dev": true
     },
     "lodash.clonedeep": {
       "version": "4.5.0",
-      "dev": true
-    },
-    "lodash.deburr": {
-      "version": "3.2.0",
       "dev": true
     },
     "lodash.defaults": {
@@ -2505,10 +2515,6 @@
     },
     "lodash.uniq": {
       "version": "4.5.0",
-      "dev": true
-    },
-    "lodash.words": {
-      "version": "3.2.0",
       "dev": true
     },
     "log-symbols": {
@@ -3080,13 +3086,7 @@
     },
     "postcss-loader": {
       "version": "1.3.2",
-      "dev": true,
-      "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        }
-      }
+      "dev": true
     },
     "postcss-media-query-parser": {
       "version": "0.2.3",
@@ -3488,10 +3488,6 @@
         "camelcase": {
           "version": "4.0.0",
           "dev": true
-        },
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
         }
       }
     },
@@ -3557,7 +3553,13 @@
     },
     "sass-loader": {
       "version": "4.1.1",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "save-pixels": {
       "version": "2.3.4",
@@ -3925,13 +3927,7 @@
     },
     "style-loader": {
       "version": "0.13.2",
-      "dev": true,
-      "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        }
-      }
+      "dev": true
     },
     "style-search": {
       "version": "0.1.0",
@@ -4218,13 +4214,7 @@
     },
     "url-loader": {
       "version": "0.5.8",
-      "dev": true,
-      "dependencies": {
-        "loader-utils": {
-          "version": "1.0.2",
-          "dev": true
-        }
-      }
+      "dev": true
     },
     "url-parse": {
       "version": "1.1.8",
@@ -4324,7 +4314,13 @@
     },
     "webpack": {
       "version": "2.2.1",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "loader-utils": {
+          "version": "0.2.17",
+          "dev": true
+        }
+      }
     },
     "webpack-dev-middleware": {
       "version": "1.10.1",
