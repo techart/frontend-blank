@@ -41,6 +41,8 @@ var plugins = [
 
     new styleLintPlugin({
         syntax: mainStyleType,
+        emitErrors: false, //Считать ошибки предупреждениями
+        quiet: false, //С v0.6.0 по дефолту true
         files: ['/**/src/**/*.s?(a|c)ss', '/**/src/**/*.less']
     }),
 
@@ -207,7 +209,10 @@ var _export = {
             {
                 test: /\.js$/,
                 include: __dirname + '/src',
-                loader: 'eslint'
+                loader: 'eslint-loader',
+                options: {
+                    emitWarning: true,
+                }
             }
         ],
         loaders: [
