@@ -1,6 +1,6 @@
 {
   "name": "tao-webpack",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
@@ -8,12 +8,9 @@
     "watch": "BROWSERSLIST_CONFIG=./.browserslist NODE_ENV=dev webpack --progress --watch",
     "build-prod": "BROWSERSLIST_CONFIG=./.browserslist NODE_ENV=prod webpack",
     "build-dev": "BROWSERSLIST_CONFIG=./.browserslist NODE_ENV=dev webpack",
-    "test-comparison": "casperjs test test/comparison.js --user=`whoami` || true",
     "pkg": "yarn install && bower install",
-    "cached-pkg": "npm-cache install bower npm",
-    "install-tests": "sudo npm i -g fs phantomjs-prebuilt phantomcss resemblejs casperjs",
     "install-main": "sudo npm i -g bower webpack babel-cli",
-    "lock": "npm shrinkwrap --dev && bower i --reset-shrinkwrap"
+    "lock": "bower i --reset-shrinkwrap"
   },
   "repository": {
     "type": "git",
@@ -23,11 +20,10 @@
   "license": "ISC",
   "dependencies": {
     "bourbon": "^4.2.7",
-    "normalize-scss": "^5.0.2",
-    "jquery": "^3.1.0"
+    "jquery": "^3.1.0",
+    "normalize-scss": "^5.0.2"
   },
   "devDependencies": {
-    "@webtechart/doiuse": "^2.5.1",
     "assets-webpack-plugin": "^3.4.0",
     "autoprefixer": "^6.3.5",
     "babel-core": "^6.7.2",
@@ -54,12 +50,12 @@
     "json-loader": "^0.5.4",
     "less": "^2.6.1",
     "less-loader": "^2.2.2",
-    "node-sass": "3.13.1",
+    "node-sass": "4.5.x",
     "path": "^0.12.7",
     "postcss-loader": "^0.13.0",
     "resolve-url-loader": "^2.0.2",
     "rimraf": "^2.5.2",
-    "sass-loader": "^4.0.0",
+    "sass-loader": "4.x.x",
     "style-loader": "^0.13.0",
     "stylelint": "8.0.x",
     "stylelint-config-standard": "17.0.x",

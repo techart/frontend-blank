@@ -8,7 +8,6 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require("path");
 var autoprefixer = require('autoprefixer');
-var doiuse = require('@webtechart/doiuse');
 var BowerWebpackPlugin = require("bower-webpack-plugin");
 var ComponentResolverPlugin = require('component-resolver-webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -67,11 +66,11 @@ var plugins = [
             glob: '**/*.*'
         },
         target: {
-            image: path.resolve(__dirname, 'img/sprite/sprite.png'),
+            image:  __dirname + '/img/generate/[hash].png',
             css: path.resolve(__dirname, 'src/style/' + (mainStyleType == 'scss' ? '_' : '') + 'sprite.' + mainStyleType)
         },
         apiOptions: {
-            cssImageRef: "~img/sprite/sprite.png"
+            cssImageRef: "~img/generate/[hash].png"
         },
         spritesmithOptions: {
             padding: 2,
@@ -204,7 +203,7 @@ var _export = {
         preLoaders: [
             {
                 test: /\.js$/,
-                loader: 'component-css?ext='+ userSettings.mainStyleType
+                loader: 'component-css-loader?ext=css!component-css-loader?ext='+ userSettings.mainStyleType
             },
             {
                 test: /\.js$/,
@@ -244,7 +243,7 @@ var _export = {
                 loader: 'html',
             },
             {
-                test: /\.(png|gif|jpe?g|svg)$/i,
+                test: /\.(png|gif|jpe?g|svg|cur)$/i,
                 include: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
                     'file?name=[path][name].[ext]',
@@ -252,7 +251,7 @@ var _export = {
                 ]
             },
             {
-                test: /\.(png|gif|jpe?g|svg)$/i,
+                test: /\.(png|gif|jpe?g|svg|cur)$/i,
                 exclude: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
                     'url?limit=' + fileLimit + '&name=[path][name].[ext]',
@@ -260,8 +259,8 @@ var _export = {
                 ]
             },
             {
-                test: /\.woff2?(\?\S*)?$/i,
-                loader: 'url?limit=' + fileLimit + ',name=[path][name].[ext]',
+                test: /\.(woff2|woff)?$/i,
+                loader: 'url-loader?limit=' + fileLimit + ',name=[path][name].[ext]',
             },
             {
                 test: /\.ttf|eot(\?\S*)?$/,
@@ -278,13 +277,7 @@ var _export = {
         return [
             autoprefixer({
                 browsers: userSettings.browsers
-            }),
-            doiuse({
-		// ignore: ['rem'],
-                browsers: userSettings.browsers,
-                ignoreFiles: ['/**/node_modules/**/*', 'node_modules/**/*', '/**/bower_components/**/*', 'bower_components/**/*']
             })
-
         ];
     }
 };
