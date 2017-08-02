@@ -1,6 +1,8 @@
 .idea
 sprite.*
 _sprite.*
+/img/generate/*
+!/img/generate/.gitkeep
 /bower_components/
 /node_modules/
 /test/comparison/

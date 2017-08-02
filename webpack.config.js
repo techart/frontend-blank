@@ -48,11 +48,11 @@ var plugins = [
             glob: '**/*.*'
         },
         target: {
-            image: path.resolve(__dirname, 'img/sprite/sprite.png'),
+            image:  __dirname + '/img/generate/[hash].png',
             css: path.resolve(__dirname, 'src/style/' + (mainStyleType == 'scss' ? '_' : '') + 'sprite.' + mainStyleType)
         },
         apiOptions: {
-            cssImageRef: "~img/sprite/sprite.png"
+            cssImageRef: "~img/generate/[hash].png"
         },
         spritesmithOptions: {
             padding: 2,
@@ -179,7 +179,7 @@ var _export = {
             {
                 test: /\.js$/,
                 enforce: "pre",
-                loader: 'component-css-loader?ext='+ userSettings.mainStyleType
+                loader: 'component-css-loader?ext=css!component-css-loader?ext='+ userSettings.mainStyleType
             },
             {
                 test: /\.js$/,
@@ -218,7 +218,7 @@ var _export = {
                 loader: 'html-loader',
             },
             {
-                test: /\.(png|gif|jpe?g|svg)$/i,
+                test: /\.(png|gif|jpe?g|svg|cur)$/i,
                 include: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
                     'file-loader?name=[path][name].[ext]',
@@ -226,7 +226,7 @@ var _export = {
                 ]
             },
             {
-                test: /\.(png|gif|jpe?g|svg)$/i,
+                test: /\.(png|gif|jpe?g|svg|cur)$/i,
                 exclude: path.resolve(__dirname, imgCommonFolder),
                 loaders: [
                     'url-loader?limit=' + fileLimit + '&name=[path][name].[ext]',
@@ -234,7 +234,7 @@ var _export = {
                 ]
             },
             {
-                test: /\.woff2?(\?\S*)?$/i,
+                test: /\.(woff2|woff)?$/i,
                 loader: 'url-loader?limit=' + fileLimit + ',name=[path][name].[ext]',
             },
             {
