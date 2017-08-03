@@ -259,7 +259,7 @@ var _export = {
                 ]
             },
             {
-                test: /\.(woff2|woff)?$/i,
+                test: /\.woff2?(\?\S*)?$/i,
                 loader: 'url-loader?limit=' + fileLimit + ',name=[path][name].[ext]',
             },
             {
