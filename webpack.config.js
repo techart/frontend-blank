@@ -238,7 +238,7 @@ var _export = {
                 loader: 'url-loader?limit=' + fileLimit + ',name=[path][name].[ext]',
             },
             {
-                test: /\.ttf|eot(\?\S*)?$/,
+                test: /\.ttf|eot|svg(\?\S*)?$/,
                 loader: 'file-loader?name=[path][name].[ext]'
             },
             {
