@@ -1,6 +1,8 @@
 .eslintrc.json
 .stylelintrc
 .blankcore
+.gitignore
+.htaccess
 webpack.config.js
 webpack.server.js
 package.json
