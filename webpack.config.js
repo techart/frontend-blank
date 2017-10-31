@@ -209,7 +209,7 @@ var _export = {
                 test: /\.js$/,
                 include: __dirname + '/src',
                 loader: 'eslint-loader',
-                options: {
+                query: {
                     emitWarning: true,
                 }
             }
