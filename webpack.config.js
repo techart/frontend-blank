@@ -264,6 +264,7 @@ var _export = {
             },
             {
                 test: /\.ttf|eot|svg(\?\S*)?$/,
+                exclude: path.resolve(__dirname, imgCommonFolder),
                 loader: 'file-loader?name=[path][name].[ext]'
             },
             {
