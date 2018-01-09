@@ -1,6 +1,6 @@
 {
   "name": "tao-webpack",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "normalize-scss": "^5.0.2"
   },
   "devDependencies": {
+    "@webtechart/tao-bem": "1.3.x",
     "assets-webpack-plugin": "^3.4.0",
     "autoprefixer": "^6.3.5",
     "babel-core": "^6.7.2",
@@ -39,7 +40,8 @@
     "bower": "^1.7.7",
     "bower-shrinkwrap-resolver": "^0.4.1",
     "clean-webpack-plugin": "^0.1.8",
-    "component-css-loader": "^0.1.0",
+    "component-css-loader": "https://github.com/gserrg/component-css-loader",
+    "compression-webpack-plugin": "1.1.x",
     "css-loader": "^0.28.0",
     "directory-named-webpack-plugin": "^2.0.0",
     "eslint": "4.2.x",
@@ -63,6 +65,12 @@
     "stylelint-config-standard": "17.0.x",
     "stylelint-webpack-plugin": "0.9.x",
     "url-loader": "^0.5.7",
+    "v-bem": "1.1.x",
+    "vue": "2.5.x",
+    "vue-loader": "13.6.x",
+    "vue-template-compiler": "2.5.x",
+    "vuex": "3.0.x",
+    "vuex-localstorage": "1.0.x",
     "webpack": "2.3.x",
     "webpack-dev-server": "^2.0.0",
     "webpack-spritesmith": "^0.2.0"

@@ -11,6 +11,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 var applyPolyfill = function applyBabelPolyfill(entry) {
     entry[Object.keys(entry)[0]].unshift('babel-polyfill');
@@ -77,6 +78,7 @@ var plugins = [
     ),
 
     new webpack.ProvidePlugin({
+        BEM: ["@webtechart/tao-bem", "default"],
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery"
@@ -122,7 +124,12 @@ if (production) {
             }
         }),
 
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+
+        new CompressionPlugin({
+            test: [/\.js/, /\.css/, /\.svg/],
+            level: 9,
+        }),
 
     ]);
 } else {
@@ -146,10 +153,11 @@ var _export = {
     },
 
     resolve: {
-        extensions: ['.js', '.less', '.sass', '.scss'],
+        extensions: ['.js', '.vue', '.less', '.sass', '.scss',],
         alias: {
+            "vue$": "vue/dist/vue.esm.js",
             img: 'img',
-            font: 'font'
+            font: 'font',
         },
         modules: [
             path.join(__dirname, "src"),
@@ -179,6 +187,7 @@ var _export = {
             {
                 test: /\.js$/,
                 enforce: "pre",
+                include: __dirname + '/src',
                 loader: 'component-css-loader?ext=css!component-css-loader?ext='+ userSettings.mainStyleType
             },
             {
@@ -197,6 +206,21 @@ var _export = {
                 query: {
                     presets: ['es2015']
                 }
+            },
+            {
+                test: /\.vue$/,
+                use: [{
+                    loader: "vue-loader",
+                    options: {
+                        productionTip: false,
+                        loaders: {
+                            js: "babel-loader?presets[]=es2015",
+                        },
+                        preLoaders: {
+                            js: "component-css-loader?ext=" + userSettings.mainStyleType,
+                        }
+                    }
+                }]
             },
             // Extract css files
             {
