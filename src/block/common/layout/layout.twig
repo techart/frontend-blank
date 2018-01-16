@@ -1,0 +1,14 @@
+{# @var string content #}
+{# @var string header #}
+{# @var string footer #}
+<div class="{{ block.cls }}">
+	<main class="{{ block.elem('content') }}">
+		{{ content }}
+	</main>
+	<header class="{{ block.elem('header') }}">
+		{{ header }}
+	</header>
+	<footer class="{{ block.elem('footer') }}">
+		{{ footer }}
+	</footer>
+</div>

@@ -1,0 +1,6 @@
+[ignore]
+[include]
+[libs]
+src/
+flow-typed/
+[options]

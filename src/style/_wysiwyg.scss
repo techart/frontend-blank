@@ -1,0 +1,99 @@
+@mixin wysiwyg () {
+	h1,
+	.h1,
+	.c-h1 {
+		color: $black;
+		font-weight: $global-weight-bold;
+		line-height: 1;
+	}
+
+	h2,
+	.h2,
+	.c-h2 {
+		color: $black;
+		font-weight: $global-weight-normal;
+		line-height: 1;
+	}
+
+	h3,
+	.h3,
+	.c-h3 {
+		color: $dark-gray;
+		font-weight: $global-weight-normal;
+	}
+
+	big,
+	.big,
+	.c-big {
+		color: $black;
+		font-size: $global-font-size * 1.5;
+	}
+
+	b,
+	strong {
+		font-weight: $global-weight-bold;
+	}
+
+	hr {
+		border: none;
+		border-bottom: 2px solid $dark-gray;
+	}
+
+	ul {
+		padding-left: 30px;
+
+		li {
+			margin-bottom: 10px;
+		}
+	}
+
+	ol {
+		padding-left: 30px;
+
+		li {
+			margin: 10px 0;
+		}
+	}
+
+	a {
+		color: $medium-gray;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.c-right {
+		float: right;
+		margin: 0 0 10px 10px;
+	}
+
+	.c-left {
+		float: left;
+		margin: 0 10px 10px 0;
+	}
+
+	.c-black {
+		color: $black;
+	}
+
+	.c-gray {
+		color: $dark-gray;
+	}
+
+	.c-hidden {
+		display: none;
+	}
+
+	.c-small-hidden {
+		@include breakpoint(small only) {
+			display: none;
+		}
+	}
+
+	.c-medium-hidden {
+		@include breakpoint(medium only) {
+			display: none;
+		}
+	}
+}

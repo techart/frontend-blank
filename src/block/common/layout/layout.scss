@@ -1,0 +1,39 @@
+@import "~style";
+
+$block-name: 'b-layout';
+
+.#{$block-name} {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+
+	&__header {
+		order: 1;
+		width: 100%;
+
+		@include breakpoint("large") {
+			@include xy-grid-container();
+		}
+	}
+
+	&__content {
+		@include wysiwyg();
+
+		flex-grow: 1;
+		order: 2;
+		width: 100%;
+
+		@include breakpoint("large") {
+			@include xy-grid-container();
+		}
+	}
+
+	&__footer {
+		order: 3;
+		width: 100%;
+
+		@include breakpoint("large") {
+			@include xy-grid-container();
+		}
+	}
+}

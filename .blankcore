@@ -2,9 +2,11 @@
 .stylelintrc
 .blankcore
 .gitignore
+.flowconfig
 .htaccess
 webpack.config.js
 webpack.server.js
 package.json
+src/style/_mixins_lib.scss
 -directives
 no_browser_list = 1

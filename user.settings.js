@@ -1,6 +1,5 @@
 if (typeof process != 'undefined') {
 	var path = require('path');
-	var fs = require('fs');
 	var child_process = require('child_process');
 }
 
@@ -14,10 +13,11 @@ var settings = {
 	entry: {
 		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку
 		//common: ['jquery'], // По умолчанию все общие части собираеются в файл index.js
-		index: ['./src/index.js'],
-		'.img': ['./src/.img.js'],
+		index: ['./src/entry/index.js'],
+		'.img': ['./src/entry/.img.js'],
 		// Создания дополнительной точки входа нужно. До дополнительной тчки входа обязательно должен быть подключен файл с общими частями
 		// main: ['./src/page/main/main.js']
+		'admin-wysiwyg' : ['./src/style/layout/admin-wysiwyg.scss']
 	},
 	hash: {
 		'dev': false,
@@ -38,8 +38,29 @@ var settings = {
 		colors: true,
 	},
 
+	images: {
+		bypassOnDebug: true,
+		gifsicle: {
+			interlaced: false,
+		},
+		optipng: {
+			optimizationLevel: 7
+		},
+		pngquant: {
+			enabled: false,
+		},
+		mozjpeg: {
+			quality: 93
+		}
+	},
+	base64MaxFileSize: 10000,
+	// Два следующих объекта использовать только в крайней необходимости
+	aliases: { // Альтернативные имена для путей, например "my_plugin" : "src/component/alert"
+	},
+	providePlugin: { // Автоматическая подгрузка модулей через providePlugin
+	},
+
 	exposeGlobal: [{'module': 'jquery', 'names': ['jQuery', '$']}],
-	aliasGlobal: ['jquery'],
 
 	getPublicPath: function getPublicPath(env) {
 		env = env || 'prod';
@@ -51,9 +72,6 @@ var settings = {
 	},
 	getUserName: function getUserName() {
 		try {
-			if (typeof casper != 'undefined') {
-				return casper.cli.options.user;
-			}
 			return String(child_process.execSync("whoami", {encoding: 'utf8'})).trim();
 		} catch (e) {
 			return null;

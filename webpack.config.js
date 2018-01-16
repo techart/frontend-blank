@@ -8,15 +8,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require("path");
 var DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-var SpritesmithPlugin = require('webpack-spritesmith');
 var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
-
-var applyPolyfill = function applyBabelPolyfill(entry) {
-    entry[Object.keys(entry)[0]].unshift('babel-polyfill');
-    return entry;
-};
+var FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin');
 
 var addHash = function addTemplateHash(template, hash, devHash) {
     devHash = devHash || hash;
@@ -29,10 +24,12 @@ var cssloader = (production ? 'css-loader?sourceMap&minimize' : 'css-loader?sour
 var styles = cssloader + '!postcss-loader?sourceMap';
 var sassStyle = styles + '!resolve-url-loader!sass-loader?sourceMap&precision=6';
 var lessStyle = styles + '!less-loader?sourceMap';
-var imageLoader = 'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false';
-//'image?{bypassOnDebug: true, progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
-var fileLimit = 10000;
-var imgCommonFolder = 'img/common';
+var provideVariables = {
+    BEM: ["@webtechart/tao-bem", "default"],
+    $: "jquery",
+    jQuery: "jquery",
+};
+provideVariables = Object.assign(provideVariables, userSettings.providePlugin);
 
 var plugins = [
 
@@ -43,21 +40,8 @@ var plugins = [
         files: ['/**/src/**/*.s?(a|c)ss', '/**/src/**/*.less']
     }),
 
-    new SpritesmithPlugin({
-        src: {
-            cwd: path.resolve(__dirname, 'img/sprite/png'),
-            glob: '**/*.*'
-        },
-        target: {
-            image:  __dirname + '/img/generate/[hash].png',
-            css: path.resolve(__dirname, 'src/style/' + (mainStyleType == 'scss' ? '_' : '') + 'sprite.' + mainStyleType)
-        },
-        apiOptions: {
-            cssImageRef: "~img/generate/[hash].png"
-        },
-        spritesmithOptions: {
-            padding: 2,
-        }
+    new FlowBabelWebpackPlugin({
+        warn: true,
     }),
 
     new webpack.DefinePlugin({
@@ -67,7 +51,6 @@ var plugins = [
     new webpack.optimize.CommonsChunkPlugin({
         name: Object.keys(userSettings.entry)[0], // Move dependencies to our main file
         chunks: Object.keys(userSettings.entry),
-        // children:  true, // Look for common dependencies in all children, // BUG!
         minChunks: 2 // How many times a dependency must come up before being extracted
     }),
 
@@ -77,12 +60,7 @@ var plugins = [
         }
     ),
 
-    new webpack.ProvidePlugin({
-        BEM: ["@webtechart/tao-bem", "default"],
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery"
-    }),
+    new webpack.ProvidePlugin(provideVariables),
 
     new AssetsPlugin({
         filename: path.join('assets', env + '.json'),
@@ -99,22 +77,10 @@ if (env != 'hot') {
 }
 if (production) {
     plugins = plugins.concat([
-        // This plugin prevents Webpack from creating chunks
-        // that would be too small to be worth loading separately
-        // new webpack.optimize.MinChunkSizePlugin({
-        //     minChunkSize: 1000, // ~5kb
-        // }),
-
-        // new webpack.optimize.AggressiveMergingPlugin(),
-
-        // This plugin minifies all the Javascript code of the final bundle
         new webpack.optimize.UglifyJsPlugin({
             mangle: true,
         }),
 
-        // This plugins defines various variables that we can set to false
-        // in production to avoid code related to them from being compiled
-        // in our final bundle
         new webpack.DefinePlugin({
             __SERVER__: !production,
             __DEVELOPMENT__: !production,
@@ -136,13 +102,13 @@ if (production) {
     plugins = plugins.concat([
         new webpack.LoaderOptionsPlugin({
             debug: true
-        })
+        }),
     ]);
 }
 
 var _export = {
     devtool: production ? false : 'source-map',
-    entry: applyPolyfill(userSettings.entry),
+    entry: userSettings.entry,
     output: {
         path: userSettings.getBuildPath(env),
         filename: addHash('js/[name].js', 'chunkhash', 'hash'),
@@ -156,23 +122,21 @@ var _export = {
         extensions: ['.js', '.vue', '.less', '.sass', '.scss',],
         alias: {
             "vue$": "vue/dist/vue.esm.js",
-            img: 'img',
+            "tao-bem": '@webtechart/tao-bem',
             font: 'font',
         },
         modules: [
             path.join(__dirname, "src"),
             '.',
             'img',
-            path.join(__dirname, "node_modules", "@webtechart"),
-            path.join(__dirname, "node_modules"),
-            path.join(__dirname, "bower_components")
+            path.join(__dirname, "node_modules")
         ],
         plugins: [
             new DirectoryNamedWebpackPlugin(),
         ],
     },
     resolveLoader: {
-        modules: [path.join(__dirname, "node_modules"), path.join(__dirname, "bower_components")]
+        modules: [path.join(__dirname, "node_modules")]
     },
 
     plugins: plugins,
@@ -203,8 +167,18 @@ var _export = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: __dirname + '/src',
-                query: {
-                    presets: ['es2015']
+                options: {
+                    "presets": [
+                        ["env", {
+                            targets: {
+                                "browsers": ["Safari >= 9", "last 3 versions", "not ie <= 10"]
+                            },
+                            "useBuiltIns": true // С betta3 usage|entry
+                        }]
+                    ],
+                    plugins : [
+                        "transform-flow-comments"
+                    ],
                 }
             },
             {
@@ -214,7 +188,7 @@ var _export = {
                     options: {
                         productionTip: false,
                         loaders: {
-                            js: "babel-loader?presets[]=es2015",
+                            js: "babel-loader?presets[]=env",
                         },
                         preLoaders: {
                             js: "component-css-loader?ext=" + userSettings.mainStyleType,
@@ -222,7 +196,6 @@ var _export = {
                     }
                 }]
             },
-            // Extract css files
             {
                 test: /\.css$/,
                 loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"}) : 'style-loader!' + styles
@@ -243,27 +216,25 @@ var _export = {
             },
             {
                 test: /\.(png|gif|jpe?g|svg|cur)$/i,
-                include: path.resolve(__dirname, imgCommonFolder),
-                loaders: [
-                    'file-loader?name=[path][name].[ext]',
-                    imageLoader
-                ]
-            },
-            {
-                test: /\.(png|gif|jpe?g|svg|cur)$/i,
-                exclude: path.resolve(__dirname, imgCommonFolder),
-                loaders: [
-                    'url-loader?limit=' + fileLimit + '&name=[path][name].[ext]',
-                    imageLoader
-                ]
+                include: path.resolve(__dirname, 'img'),
+                loaders: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: userSettings.base64MaxFileSize,
+                        name: "[path][name].[ext]"
+                    }
+                }, {
+                    loader: "image-webpack-loader",
+                    options: userSettings.images,
+                }]
             },
             {
                 test: /\.woff2?(\?\S*)?$/i,
-                loader: 'url-loader?limit=' + fileLimit + ',name=[path][name].[ext]',
+                loader: 'url-loader?limit=' + userSettings.base64MaxFileSize + ',name=[path][name].[ext]',
             },
             {
                 test: /\.ttf|eot|svg(\?\S*)?$/,
-                exclude: path.resolve(__dirname, imgCommonFolder),
+                exclude: path.resolve(__dirname, 'img'),
                 loader: 'file-loader?name=[path][name].[ext]'
             }
         ]
@@ -283,10 +254,8 @@ if (userSettings.exposeGlobal) {
     });
 }
 
-if (userSettings.aliasGlobal) {
-    userSettings.aliasGlobal.forEach(function (name) {
-        _export.resolve.alias[name] = require.resolve(name);
-    });
+if (userSettings.aliases) {
+    _export.resolve.alias = Object.assign(_export.resolve.alias, userSettings.aliases);
 }
 
 module.exports = _export;
