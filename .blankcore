@@ -4,6 +4,7 @@
 .gitignore
 .flowconfig
 .htaccess
+webpack/utils.js
 webpack.config.js
 webpack.server.js
 package.json

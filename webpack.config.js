@@ -1,4 +1,5 @@
 var userSettings = require('./user.settings');
+let utils = require("./webpack/utils");
 
 var env = process.env.NODE_ENV || 'hot';
 var production = env === 'prod';
@@ -70,7 +71,7 @@ var plugins = [
 ];
 if (env != 'hot') {
     plugins = plugins.concat([
-        new CleanWebpackPlugin(path.resolve(userSettings.getBuildPath(env)), {
+        new CleanWebpackPlugin(path.resolve(utils.buildPath(env)), {
             root: path.resolve(__dirname, '..')  //TODO: is this OK?
         }),
     ]);
@@ -110,16 +111,16 @@ var _export = {
     devtool: production ? false : 'source-map',
     entry: userSettings.entry,
     output: {
-        path: userSettings.getBuildPath(env),
+        path: utils.buildPath(env),
         filename: addHash('js/[name].js', 'chunkhash', 'hash'),
         chunkFilename: addHash('js/[name].js', 'chunkhash', 'hash'),
-        publicPath: userSettings.getPublicPath(env),
+        publicPath: utils.publicPath(env),
         devtoolModuleFilenameTemplate: "[absolute-resource-path]",
         devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
     },
 
     resolve: {
-        extensions: ['.js', '.vue', '.less', '.sass', '.scss',],
+        extensions: ['.js', '.vue', '.scss', '.less', '.css', '.sass'],
         alias: {
             "vue$": "vue/dist/vue.esm.js",
             "tao-bem": '@webtechart/tao-bem',

@@ -3,19 +3,18 @@ var webpack = require('webpack'),
 	webpackConfig = require('./webpack.config'),
 	userSettings = require('./user.settings')
 	;
-
-var url = userSettings.hotUrl();
+let utils = require("./webpack/utils");
 
 webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 
 for (var name in webpackConfig.entry) {
 	webpackConfig.entry[name] = webpackConfig.entry[name].concat([
-		'webpack-dev-server/client?' + url,
+		'webpack-dev-server/client?' + utils.hotUrl(),
 		'webpack/hot/dev-server'
 	]);
 }
 
-webpackConfig.output.publicPath = url + userSettings.getPublicPath('dev');
+webpackConfig.output.publicPath = utils.hotUrl() + utils.publicPath('dev');
 
 // webpackConfig.devtool =  "eval-source-map";
 
@@ -34,7 +33,7 @@ var webpackServer = new WebpackDevServer(webpack(webpackConfig), {
 	}
 });
 
-webpackServer.listen(userSettings.hotPort, userSettings.hotHost(), function (err) {
+webpackServer.listen(userSettings.hotPort, utils.hotHost(), function (err) {
 	if (err) {
 		console.log(err);
 	}
