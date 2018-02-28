@@ -17,8 +17,6 @@ $block-name: 'b-layout';
 	}
 
 	&__content {
-		@include wysiwyg();
-
 		flex-grow: 1;
 		order: 2;
 		width: 100%;
