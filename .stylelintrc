@@ -1,11 +1,11 @@
 {
-  "extends": "stylelint-config-standard",
-  "rules": {
-    "indentation": "tab",
-    "at-rule-no-unknown": null
-  },
-  "ignoreFiles": [
-    "/**/node_modules/**/*",
-    "node_modules/**/*"
-  ]
+	"extends": "stylelint-config-standard",
+	"rules": {
+		"indentation": "tab",
+		"at-rule-no-unknown": null
+	},
+	"ignoreFiles": [
+		"/**/node_modules/**/*",
+		"node_modules/**/*"
+	]
 }
