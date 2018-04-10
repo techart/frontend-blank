@@ -1,5 +1,6 @@
 .eslintrc.json
 .stylelintrc
+.postcssrc.js
 .blankcore
 .gitignore
 .flowconfig

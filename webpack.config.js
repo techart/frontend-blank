@@ -198,7 +198,7 @@ var _export = {
 			},
 			{
 				test: /\.css$/,
-				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"}) : 'style-loader!' + styles
+				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: "style-loader", use: cssloader}) : 'style-loader!' + styles
 			},
 			{
 				test: /\.(scss|sass)$/,
