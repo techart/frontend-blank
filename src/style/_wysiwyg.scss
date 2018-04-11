@@ -2,7 +2,7 @@
 	h1,
 	.h1,
 	.c-h1 {
-		color: $black;
+		color: $body-font-color;
 		font-weight: $global-weight-bold;
 		line-height: 1;
 	}
@@ -10,7 +10,7 @@
 	h2,
 	.h2,
 	.c-h2 {
-		color: $black;
+		color: $body-font-color;
 		font-weight: $global-weight-normal;
 		line-height: 1;
 	}
