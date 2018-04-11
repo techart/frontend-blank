@@ -1,0 +1,13 @@
+{
+	"presets": [
+		["env", {
+			"targets": {
+				"browsers": ["Safari >= 9", "last 3 versions", "not ie <= 10"]
+			},
+			"useBuiltIns": true
+		}]
+	],
+	"plugins" : [
+		"transform-flow-comments"
+	]
+}

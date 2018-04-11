@@ -167,19 +167,6 @@ var _export = {
 				test: /\.js$/,
 				loader: 'babel-loader',
 				include: __dirname + '/src',
-				options: {
-					"presets": [
-						["env", {
-							targets: {
-								"browsers": ["Safari >= 9", "last 3 versions", "not ie <= 10"]
-							},
-							"useBuiltIns": true // С betta3 usage|entry
-						}]
-					],
-					plugins : [
-						"transform-flow-comments"
-					],
-				}
 			},
 			{
 				test: /\.vue$/,
@@ -188,7 +175,7 @@ var _export = {
 					options: {
 						productionTip: false,
 						loaders: {
-							js: "babel-loader?presets[]=env",
+							js: "babel-loader",
 						},
 						preLoaders: {
 							js: "component-css-loader?ext=" + userSettings.mainStyleType,
