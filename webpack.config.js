@@ -27,6 +27,7 @@ var sassStyle = styles + '!resolve-url-loader!sass-loader?sourceMap&precision=6'
 var lessStyle = styles + '!less-loader?sourceMap';
 var provideVariables = {
 	BEM: ["@webtechart/tao-bem", "default"],
+	Vue: ["vue", "default"],
 	$: "jquery",
 	jQuery: "jquery",
 };
