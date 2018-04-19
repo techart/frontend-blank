@@ -16,20 +16,7 @@ module.exports = {
 		'dev': false,
 		'prod': true
 	},
-	stats: {
-		hash: false,
-		version: false,
-		timings: false,
-		assets: false,
-		chunks: false,
-		modules: false,
-		children: false,
-		source: false,
-		errors: true,
-		errorDetails: true,
-		warnings: true,
-		colors: true,
-	},
+	stats: {},
 
 	images: {
 		bypassOnDebug: true,

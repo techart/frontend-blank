@@ -107,6 +107,22 @@ if (production) {
 	]);
 }
 
+let stats = {
+	hash: false,
+	version: false,
+	timings: false,
+	assets: false,
+	chunks: false,
+	modules: false,
+	children: false,
+	source: false,
+	errors: true,
+	errorDetails: true,
+	warnings: true,
+	colors: true,
+};
+Object.assign(stats, userSettings.stats);
+
 var _export = {
 	devtool: production ? false : 'source-map',
 	entry: userSettings.entry,
@@ -142,7 +158,7 @@ var _export = {
 
 	plugins: plugins,
 	profile: false,
-	stats: userSettings.stats,
+	stats,
 	node: {
 		fs: 'empty',
 		net: 'empty',
