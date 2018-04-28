@@ -1,11 +1,11 @@
 //Пользовательские переменные
 
-//Foundation - оттенки серого
-$white: #fefefe;
-$light-gray: #e6e6e6;
-$medium-gray: #cacaca;
-$dark-gray: #8a8a8a;
-$black: #0a0a0a;
+//Цвета, по возможности желательно придерживаться этого формата
+$color-white: #fefefe;
+$color-black: #0a0a0a;
+$color-gray: #cacaca;
+$color-gray-light: #e6e6e6;
+$color-gray-dark: #8a8a8a;
 
 //Foundation - глобальная конфигурация шрифта, максимальная ширина и размер радиуса
 $global-width: 1200px;
@@ -16,8 +16,8 @@ $global-weight-bold: bold;
 $global-radius: 0;
 
 //Foundation - основные параметры body
-$body-background: $white;
-$body-font-color: $black;
+$body-background: $color-white;
+$body-font-color: $color-black;
 $body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 
 //Foundation - настройки сеток
@@ -29,6 +29,14 @@ $breakpoints: (
 );
 $grid-columns: 12;
 $grid-margin-gutters: (
+	small: 20px,
+	medium: 20px,
+	large: 20px,
+	xlarge: 20px,
+);
+
+//Foundation - наружние отступы контейнера с контентом (если экран уже $global-width)
+$grid-container-padding: (
 	small: 20px,
 	medium: 20px,
 	large: 20px,

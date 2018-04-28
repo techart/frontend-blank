@@ -18,14 +18,14 @@
 	h3,
 	.h3,
 	.c-h3 {
-		color: $dark-gray;
+		color: $color-gray-dark;
 		font-weight: $global-weight-normal;
 	}
 
 	big,
 	.big,
 	.c-big {
-		color: $black;
+		color: $color-black;
 		font-size: $global-font-size * 1.5;
 	}
 
@@ -36,7 +36,7 @@
 
 	hr {
 		border: none;
-		border-bottom: 2px solid $dark-gray;
+		border-bottom: 2px solid $color-gray-dark;
 	}
 
 	ul {
@@ -56,7 +56,7 @@
 	}
 
 	a {
-		color: $medium-gray;
+		color: $color-gray;
 
 		&:hover {
 			text-decoration: none;
@@ -74,11 +74,11 @@
 	}
 
 	.c-black {
-		color: $black;
+		color: $color-black;
 	}
 
 	.c-gray {
-		color: $dark-gray;
+		color: $color-gray-dark;
 	}
 
 	.c-hidden {
