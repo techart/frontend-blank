@@ -1,13 +1,13 @@
 var userSettings = require('./user.settings');
-let utils = require("./webpack/utils");
+let utils = require('./webpack/utils');
 
 var env = process.env.NODE_ENV || 'hot';
 var production = env === 'prod';
 
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var path = require("path");
-var DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
+var path = require('path');
+var DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
@@ -26,10 +26,10 @@ var styles = cssloader + '!postcss-loader?sourceMap';
 var sassStyle = styles + '!resolve-url-loader!sass-loader?sourceMap&precision=6';
 var lessStyle = styles + '!less-loader?sourceMap';
 var provideVariables = {
-	BEM: ["@webtechart/tao-bem", "default"],
-	Vue: ["vue", "default"],
-	$: "jquery",
-	jQuery: "jquery",
+	BEM: ['@webtechart/tao-bem', 'default'],
+	Vue: ['vue', 'default'],
+	$: 'jquery',
+	jQuery: 'jquery',
 };
 provideVariables = Object.assign(provideVariables, userSettings.providePlugin);
 
@@ -39,7 +39,7 @@ var plugins = [
 		syntax: mainStyleType,
 		emitErrors: false, //Считать ошибки предупреждениями
 		quiet: false, //С v0.6.0 по дефолту true
-		files: ['/**/src/**/*.s?(a|c)ss', '/**/src/**/*.less']
+		files: ['/**/src/**/*.s?(a|c)ss', '/**/src/**/*.less'],
 	}),
 
 	new FlowBabelWebpackPlugin({
@@ -47,18 +47,18 @@ var plugins = [
 	}),
 
 	new webpack.DefinePlugin({
-		NODE_ENV: JSON.stringify(env)
+		NODE_ENV: JSON.stringify(env),
 	}),
 
 	new webpack.optimize.CommonsChunkPlugin({
 		name: Object.keys(userSettings.entry)[0], // Move dependencies to our main file
 		chunks: Object.keys(userSettings.entry),
-		minChunks: 2 // How many times a dependency must come up before being extracted
+		minChunks: 2, // How many times a dependency must come up before being extracted
 	}),
 
 	new ExtractTextPlugin({
 		filename: addHash('css/[name].css', 'contenthash'),
-		allChunks: true // false
+		allChunks: true, // false
 	}),
 
 	new webpack.ProvidePlugin(provideVariables),
@@ -66,13 +66,13 @@ var plugins = [
 	new AssetsPlugin({
 		filename: path.join('assets', env + '.json'),
 		path: __dirname,
-		prettyPrint: true
-	})
+		prettyPrint: true,
+	}),
 ];
 if (env != 'hot') {
 	plugins = plugins.concat([
 		new CleanWebpackPlugin(path.resolve(utils.buildPath(env)), {
-			root: path.resolve(__dirname, '..')  //TODO: is this OK?
+			root: path.resolve(__dirname, '..'),  //TODO: is this OK?
 		}),
 	]);
 }
@@ -87,8 +87,8 @@ if (production) {
 			__DEVELOPMENT__: !production,
 			__DEVTOOLS__: !production,
 			'process.env': {
-				BABEL_ENV: JSON.stringify(process.env.NODE_ENV)
-			}
+				BABEL_ENV: JSON.stringify(process.env.NODE_ENV),
+			},
 		}),
 
 		new webpack.NoEmitOnErrorsPlugin(),
@@ -102,7 +102,7 @@ if (production) {
 } else {
 	plugins = plugins.concat([
 		new webpack.LoaderOptionsPlugin({
-			debug: true
+			debug: true,
 		}),
 	]);
 }
@@ -131,29 +131,29 @@ var _export = {
 		filename: addHash('js/[name].js', 'chunkhash', 'hash'),
 		chunkFilename: addHash('js/[name].js', 'chunkhash', 'hash'),
 		publicPath: utils.publicPath(env),
-		devtoolModuleFilenameTemplate: "[absolute-resource-path]",
-		devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]",
+		devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+		devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]',
 	},
 
 	resolve: {
 		extensions: ['.js', '.vue', '.scss', '.less', '.css', '.sass'],
 		alias: {
-			"vue$": "vue/dist/vue.esm.js",
-			"tao-bem": '@webtechart/tao-bem',
+			'vue$': 'vue/dist/vue.esm.js',
+			'tao-bem': '@webtechart/tao-bem',
 			font: 'font',
 		},
 		modules: [
-			path.join(__dirname, "src"),
+			path.join(__dirname, 'src'),
 			'.',
 			'img',
-			path.join(__dirname, "node_modules")
+			path.join(__dirname, 'node_modules'),
 		],
 		plugins: [
 			new DirectoryNamedWebpackPlugin(),
 		],
 	},
 	resolveLoader: {
-		modules: [path.join(__dirname, "node_modules")]
+		modules: [path.join(__dirname, 'node_modules')],
 	},
 
 	plugins: plugins,
@@ -167,18 +167,18 @@ var _export = {
 		loaders: [
 			{
 				test: /\.js$/,
-				enforce: "pre",
+				enforce: 'pre',
 				include: __dirname + '/src',
-				loader: 'component-css-loader?ext=css!component-css-loader?ext='+ userSettings.mainStyleType
+				loader: 'component-css-loader?ext=css!component-css-loader?ext=' + userSettings.mainStyleType,
 			},
 			{
 				test: /\.js$/,
-				enforce: "pre",
+				enforce: 'pre',
 				include: __dirname + '/src',
 				loader: 'eslint-loader',
 				options: {
 					emitWarning: true,
-				}
+				},
 			},
 			{
 				test: /\.js$/,
@@ -188,31 +188,31 @@ var _export = {
 			{
 				test: /\.vue$/,
 				use: [{
-					loader: "vue-loader",
+					loader: 'vue-loader',
 					options: {
 						productionTip: false,
 						loaders: {
-							js: "babel-loader",
+							js: 'babel-loader',
 						},
 						preLoaders: {
-							js: "component-css-loader?ext=" + userSettings.mainStyleType,
-						}
-					}
-				}]
+							js: 'component-css-loader?ext=' + userSettings.mainStyleType,
+						},
+					},
+				}],
 			},
 			{
 				test: /\.css$/,
-				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: "style-loader", use: cssloader}) : 'style-loader!' + styles
+				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: cssloader}) : 'style-loader!' + styles,
 			},
 			{
 				test: /\.(scss|sass)$/,
 				// loader: 'style!css?sourceMap!sass?sourceMap'
-				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: sassStyle}) : 'style-loader!' + sassStyle
+				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: sassStyle}) : 'style-loader!' + sassStyle,
 			},
 			{
 				test: /\.less$/,
 				// loader: 'style!css?sourceMap!less?sourceMap'
-				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: lessStyle}) : 'style!' + lessStyle
+				loader: env != 'hot' ? ExtractTextPlugin.extract({fallback: 'style-loader', use: lessStyle}) : 'style!' + lessStyle,
 			},
 			{
 				test: /\.html$/,
@@ -225,12 +225,12 @@ var _export = {
 					loader: 'url-loader',
 					options: {
 						limit: userSettings.base64MaxFileSize,
-						name: "[path][name].[ext]"
-					}
+						name: '[path][name].[ext]',
+					},
 				}, {
-					loader: "image-webpack-loader",
+					loader: 'image-webpack-loader',
 					options: userSettings.images,
-				}]
+				}],
 			},
 			{
 				test: /\.woff2?(\?\S*)?$/i,
@@ -239,9 +239,9 @@ var _export = {
 			{
 				test: /\.ttf|eot|svg(\?\S*)?$/,
 				exclude: path.resolve(__dirname, 'img'),
-				loader: 'file-loader?name=[path][name].[ext]'
-			}
-		]
+				loader: 'file-loader?name=[path][name].[ext]',
+			},
+		],
 	},
 };
 
@@ -253,8 +253,8 @@ if (userSettings.exposeGlobal) {
 		});
 		_export.module.loaders.unshift({
 			test: require.resolve(item.module),
-			loader: query.join('!')
-		})
+			loader: query.join('!'),
+		});
 	});
 }
 

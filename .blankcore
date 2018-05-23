@@ -10,7 +10,7 @@ webpack/utils.js
 webpack.config.js
 webpack.server.js
 package.json
-src/src/entry/.img.js
+src/entry/.img.js
 src/style/_mixins_lib.scss
 -directives
 no_browser_list = 1

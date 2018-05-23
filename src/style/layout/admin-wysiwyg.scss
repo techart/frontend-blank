@@ -1,5 +1,7 @@
 @import "~style";
 
+@include site-fonts();
+
 body.wysiwyg {
 	background: $body-background;
 	color: $body-font-color;
@@ -10,7 +12,6 @@ body.wysiwyg {
 	margin: 0;
 	padding: 0;
 
-	@include site-fonts();
 	@include foundation-global-styles();
 	@include wysiwyg();
 
