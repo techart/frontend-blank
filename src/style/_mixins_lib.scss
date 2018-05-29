@@ -1,6 +1,17 @@
 // Это библиотечные миксины, их править и дополнять нельзя.
 // Свои миксины размещайте в файле _mixins_app.scss
 
+@mixin container() {
+	&__middle {
+		@include xy-grid-container();
+	}
+
+	&__row {
+		@include xy-grid();
+		@include xy-gutters($negative: true);
+	}
+}
+
 @mixin font-face($name, $path, $weight: normal, $style: normal, $woff2: false) {
 	$src: if($woff2, append(null, url($path + ".woff2") format(quote("woff2"))), null);
 	$src: append($src, url($path + ".woff") format(quote("woff")), comma);
