@@ -3,6 +3,7 @@ module.exports = {
 	buildPath: '../www/builds',
 	hotPort: 8889,
 	mainStyleType: 'scss',
+	mainTemplateType: 'twig',
 	entry: {
 		// Для вынесения общих частей всех точек входа нужно раскомментировать эту строчку
 		//common: ['jquery'], // По умолчанию все общие части собираеются в файл index.js
