@@ -18,7 +18,7 @@ module.exports = {
 		'prod': true
 	},
 	stats: {},
-
+	https: true,
 	images: {
 		bypassOnDebug: true,
 		gifsicle: {
@@ -40,6 +40,5 @@ module.exports = {
 	},
 	providePlugin: { // Автоматическая подгрузка модулей через providePlugin
 	},
-
 	exposeGlobal: [{'module': 'jquery', 'names': ['jQuery', '$']}],
 };

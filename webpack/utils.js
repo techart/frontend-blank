@@ -12,9 +12,8 @@ module.exports = {
 		}
 		return domain;
 	},
-
 	hotUrl: function () {
-		return "http://" + this.hotHost() + ":" + settings.hotPort;
+		return (settings.https ? "https" : "http") + '://' + this.hotHost() + ":" + settings.hotPort;
 	},
 	publicPath: function(env) {
 		env = env || "prod";
