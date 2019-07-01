@@ -1,0 +1,89 @@
+@import "~style";
+
+$block-name: 'b-footer';
+
+.#{$block-name} {
+	@include container();
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+	&__row {
+		align-items: flex-start;
+	}
+
+	&__logo {
+		@include xy-cell(6);
+
+		@include breakpoint(large) {
+			@include xy-cell(2);
+		}
+	}
+
+	&__contacts {
+		@include xy-cell(6);
+
+		@include breakpoint(large) {
+			@include xy-cell(2);
+		}
+	}
+
+	&__menu {
+		@include xy-cell(12);
+
+		order: 1;
+
+		@include breakpoint(large) {
+			@include xy-cell(6);
+
+			order: 0;
+		}
+	}
+
+	&__menu-items {
+		@include xy-grid();
+		@include xy-gutters($negative: true);
+	}
+
+	&__menu-item {
+		@include xy-cell(4);
+
+		@include breakpoint(large) {
+			@include xy-cell(2 of 6);
+		}
+	}
+
+	&__last-column-wr {
+		@include xy-cell(12);
+
+		@include breakpoint(large) {
+			@include xy-cell(2);
+		}
+	}
+
+	&__last-column {
+		@include breakpoint(medium down) {
+			@include xy-grid();
+			@include xy-gutters($negative: true);
+		}
+	}
+
+	&__socials {
+		@include breakpoint(medium down) {
+			@include xy-cell(6 of 12);
+		}
+	}
+
+	&__social-link {
+		background: $color-gray-light;
+		display: inline-block;
+		height: 20px;
+		width: 20px;
+	}
+
+	&__techart {
+		@include breakpoint(medium down) {
+			@include xy-cell(6 of 12);
+		}
+	}
+}

@@ -149,7 +149,9 @@ var _export = {
 			path.join(__dirname, 'node_modules'),
 		],
 		plugins: [
-			new DirectoryNamedWebpackPlugin(),
+			new DirectoryNamedWebpackPlugin({
+				honorPackage: false,
+			}),
 		],
 	},
 	resolveLoader: {

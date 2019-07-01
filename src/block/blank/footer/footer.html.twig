@@ -1,0 +1,30 @@
+{# @var string logo #}
+{# @var string contacts #}
+{# @var string[] menus #}
+{# @var string[] socials #}
+{# @var string techart #}
+<div class="{{ block }}">
+	<div class="{{ block.elem('middle') }}">
+		<div class="{{ block.elem('row') }}">
+			<div class="{{ block.elem('logo') }}">{{ logo }}</div>
+			<div class="{{ block.elem('contacts') }}">{{ contacts }}</div>
+			<nav class="{{ block.elem('menu') }}">
+				<div class="{{ block.elem('menu-items') }}">
+					{% for menu in menus %}
+						<div class="{{ block.elem('menu-item') }}">{{ menu }}</div>
+					{% endfor %}
+				</div>
+			</nav>
+			<div class="{{ block.elem('last-column-wr') }}">
+				<div class="{{ block.elem('last-column') }}">
+					<div class="{{ block.elem('socials') }}">
+						{% for social in socials %}
+							<a class="{{ block.elem('social-link').mod('type', social.type) }}" href="{{ social.link }}" target="_blank">{{ social.name }}</a>
+						{% endfor %}
+					</div>
+					<div class="{{ block.elem('techart') }}">{{ techart }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
