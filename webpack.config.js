@@ -222,7 +222,7 @@ var _export = {
 			},
 			{
 				test: /\.(png|gif|jpe?g|svg|cur)$/i,
-				include: path.resolve(__dirname, 'img'),
+				include: [path.resolve(__dirname, 'img'), path.resolve(__dirname, 'node_modules')],
 				loaders: [{
 					loader: 'url-loader',
 					options: {
