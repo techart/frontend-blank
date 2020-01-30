@@ -1,0 +1,44 @@
+@import "~style";
+
+$block-name: 'b-tile-elements-list-item';
+
+.#{$block-name} {
+	height: 100%;
+	background-color: white;
+
+	@include breakpoint(small only) {
+		flex-direction: column;
+	}
+
+	&__img-container {
+		width: 100%;
+		text-align: center;
+	}
+
+	&__img {
+		height: auto;
+		max-width: 100%;
+	}
+
+	&__info-box {
+		padding: 10px;
+	}
+
+	&__id {
+		color: gray;
+	}
+
+	&__title {
+		font-weight: bold;
+	}
+
+	&__text {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	&__date {
+		color: gray;
+		margin-bottom: 10px;
+	}
+}

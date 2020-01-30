@@ -1,0 +1,10 @@
+@import "~style";
+
+$block-name: 'b-elements-list';
+
+.#{$block-name} {
+	margin: 0 auto;
+	padding: 15px;
+	max-width: 960px;
+	width: 100%;
+}

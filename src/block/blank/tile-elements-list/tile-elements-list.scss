@@ -1,0 +1,21 @@
+@import "~style";
+
+$block-name: 'b-tile-elements-list';
+
+.#{$block-name} {
+	@include xy-grid();
+
+	&__item {
+		@include xy-cell(12);
+
+		margin-bottom: 15px;
+
+		@include breakpoint(medium) {
+			@include xy-cell(6);
+		}
+
+		@include breakpoint(large) {
+			@include xy-cell(4);
+		}
+	}
+}
