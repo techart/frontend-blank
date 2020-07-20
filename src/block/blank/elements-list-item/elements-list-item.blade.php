@@ -1,4 +1,4 @@
-<div class="{{ $block }}" id="{{ $editAreaId }}">
+<article class="{{ $block }}" id="{{ $editAreaId }}">
 	<div class="{{ $block->elem('img-container') }}">
 		@if ($image)
 			<img
@@ -23,4 +23,4 @@
 			<div class="{{ $block->elem('date') }}">{{ $date }}</div>
 		@endif
 	</div>
-</div>
+</article>
