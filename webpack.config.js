@@ -13,6 +13,7 @@ var AssetsPlugin = require('assets-webpack-plugin');
 var styleLintPlugin = require('stylelint-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
 var FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var addHash = function addTemplateHash(template, hash, devHash) {
 	devHash = devHash || hash;
@@ -78,8 +79,11 @@ if (env != 'hot') {
 }
 if (production) {
 	plugins = plugins.concat([
-		new webpack.optimize.UglifyJsPlugin({
-			mangle: true,
+		new UglifyJsPlugin({
+			"uglifyOptions":
+			{
+				mangle: true,
+			}
 		}),
 
 		new webpack.DefinePlugin({

@@ -1,6 +1,6 @@
 {
   "name": "tao-webpack",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "description": "Webpack for TAO",
   "main": "src/index.js",
   "scripts": {
@@ -23,7 +23,8 @@
   "author": "web@techart.ru",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.1.0"
+    "jquery": "^3.1.0",
+    "uglifyjs-webpack-plugin": "1.3.0"
   },
   "devDependencies": {
     "@webtechart/tao-bem": "1.3.x",

@@ -53,7 +53,7 @@ $block-name: 'b-footer';
 		}
 	}
 
-	&__last-column-wr {
+	&__last-column-wrap {
 		@include xy-cell(12);
 
 		@include breakpoint(large) {
@@ -84,6 +84,12 @@ $block-name: 'b-footer';
 	&__techart {
 		@include breakpoint(medium down) {
 			@include xy-cell(6 of 12);
+		}
+	}
+
+	&__copyright {
+		@include breakpoint(medium down) {
+			@include xy-cell(12);
 		}
 	}
 }

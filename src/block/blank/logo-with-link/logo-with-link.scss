@@ -1,0 +1,12 @@
+@import "~style";
+
+$block-name: 'b-logo-with-link';
+
+.#{$block-name} {
+	display: inline-block;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+}

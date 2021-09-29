@@ -1,0 +1,19 @@
+@import "~style";
+
+$block-name: 'b-socials-links';
+
+.#{$block-name} {
+	&__link {
+		background-repeat: no-repeat;
+		display: inline-block;
+		height: 20px;
+		width: 20px;
+		font-size: 0;
+
+		&--type {
+			&_vk {
+				background-image: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctext%20font-size%3D%2220%22%20y%3D%2217%22%20stroke-width%3D%220%22%20stroke%3D%22%23000%22%3Evk%3C%2Ftext%3E%3C%2Fsvg%3E');
+			}
+		}
+	}
+}

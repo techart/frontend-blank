@@ -18,6 +18,10 @@ $block-name: 'b-layout';
 		width: 100%;
 	}
 
+	&__page-container {
+		@include xy-grid-container();
+	}
+
 	&__footer {
 		order: 3;
 		width: 100%;

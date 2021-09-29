@@ -1,9 +1,18 @@
+{# @var boolean withoutContainer #}
 {# @var string content #}
 {# @var string header #}
 {# @var string footer #}
 <div class="{{ block.cls }}">
 	<main class="{{ block.elem('content') }}">
-		{{ content }}
+		{% if not withoutContainer %}
+			<div class="{{ block.elem('page-container') }}">
+		{% endif %}
+
+			{{ content }}
+
+		{% if not withoutContainer %}
+			</div>
+		{% endif %}
 	</main>
 	<header class="{{ block.elem('header') }}">
 		{{ header }}
